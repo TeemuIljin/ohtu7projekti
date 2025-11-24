@@ -42,7 +42,17 @@ class ViiteService:
         return self.viitetyypit[tyyppi]
 
     def anna_viitteet(self):
-        return self._viite_repository.anna()
+        #return self._viite_repository.anna()
+        viitteet = self._viite_repository.anna()
+
+        return sorted(
+            viitteet,
+            key=lambda v: (
+                v.tyyppi.lower(),
+                v.tagit.get("title", "").lower()
+            )
+        )
+
 
     def hae_viitteet_tiedostosta(self, polku=None):
         lahde = Path(polku) if polku else self.OLETUS_DATA
