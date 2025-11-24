@@ -29,5 +29,6 @@ class App:
                 arvo = self.io.read("Uusi arvo: ")
 
                 self.viite_service.muokkaa_tagia(id, tagi, arvo)
+                
 
                 print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
