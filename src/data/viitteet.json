@@ -1,0 +1,30 @@
+[
+  {
+    "type": "book",
+    "tags": {
+      "author": "Mika Waltari",
+      "title": "Sinuhe egyptiläinen",
+      "year": "1945",
+      "publisher": "WSOY"
+    }
+  },
+  {
+    "type": "book",
+    "tags": {
+      "author": "Väinö Linna",
+      "title": "Tuntematon sotilas",
+      "year": "1954",
+      "publisher": "WSOY"
+    }
+  },
+  {
+    "type": "book",
+    "tags": {
+      "author": "Sofi Oksanen",
+      "title": "Puhdistus",
+      "year": "2008",
+      "publisher": "Like"
+    }
+  }
+]
+
