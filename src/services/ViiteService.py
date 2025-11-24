@@ -21,3 +21,6 @@ class ViiteService:
 
     def anna_viitteet(self):
         return self._viite_repository.anna()
+    
+    def poista_viite(self, tunniste):
+        return self._viite_repository.poista(tunniste)

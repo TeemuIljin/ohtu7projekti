@@ -12,6 +12,10 @@ class ViiteRepository:
 
     def anna(self):
         return self._viitteet
+    
+    def poista(self, tunniste):
+        self._viitteet = [v for v in self._viitteet if v.tunniste != tunniste]
+        return True
 
 
 # -> klo 12.13
