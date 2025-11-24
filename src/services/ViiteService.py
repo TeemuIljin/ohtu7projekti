@@ -13,7 +13,7 @@ class ViiteService:
     def luo_viite(self, tyyppi, tagit):
         return self._viite_repository.luo(
             Viite(tagit['author'].replace(" ", "") +
-                  tagit['year'], tyyppi, tagit)
+                tagit['year'], tyyppi, tagit)
         )
 
     def anna_tagit(self, tyyppi):
@@ -21,3 +21,9 @@ class ViiteService:
 
     def anna_viitteet(self):
         return self._viite_repository.anna()
+    
+    def muokkaa_tagia(self, id, tagi, arvo):
+        viite = self._viite_repository.etsi_id(id)
+        if viite and tagi in viite.tagit:
+            viite.tagit[tagi] = arvo
+            self._viite_repository.tallenna(viite)

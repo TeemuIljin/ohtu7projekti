@@ -22,3 +22,12 @@ class App:
                 self.viite_service.luo_viite(tyyppi, tagit)
 
                 print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+                
+            if command == "muokkaa":
+                id = self.io.read("Muokattavan viitteen id: ")
+                tagi = self.io.read("Muokattava tagi: ")
+                arvo = self.io.read("Uusi arvo: ")
+
+                self.viite_service.muokkaa_tagia(id, tagi, arvo)
+
+                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
