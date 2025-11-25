@@ -59,6 +59,8 @@ class ViiteService:
 
         return self._viite_repository.anna()
     
+    def poista_viite(self, tunniste):
+        return self._viite_repository.poista(tunniste)
     def muokkaa_tagia(self, id, tagi, arvo):
         viite = self._viite_repository.etsi_id(id)
         if viite and tagi in viite.tagit:

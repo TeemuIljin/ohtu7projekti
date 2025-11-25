@@ -7,8 +7,6 @@ class App:
         self.io.write("Komennot: uusi, hae, listaa, bibtex, lopeta")
 
         while True:
-            command = self.io.read("> ").strip()
-
             if not command:
                 continue
 
@@ -52,6 +50,14 @@ class App:
             else:
                 self.io.write("Tuntematon komento.")
 
+                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+
+            if command == "poista":
+                
+                id = self.io.read("Viitteen tunniste: ")
+                self.viite_service.poista_viite(id)
+
+                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
     def _listaa_viitteet(self):
         viitteet = self.viite_service.anna_viitteet()
         if not viitteet:
