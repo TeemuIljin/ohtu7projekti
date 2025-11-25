@@ -4,22 +4,51 @@ class App:
         self.io = io
 
     def run(self):
-        while True:
-            command = self.io.read("Command (uusi vai muokkaa vai poista vai suodata) ")
+        self.io.write("Komennot: uusi, hae, listaa, bibtex, lopeta")
 
+        while True:
             if not command:
+                continue
+
+            if command == "lopeta":
                 break
 
+            if command == "muokkaa":
+                id = self.io.read("Muokattavan viitteen id: ")
+                tagi = self.io.read("Muokattava tagi: ")
+                arvo = self.io.read("Uusi arvo: ")
+
+                self.viite_service.muokkaa_tagia(id, tagi, arvo)
+
+                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+                self.io.write("\n\n".join(map(str, viitteet)))
+                
             if command == "uusi":
                 tyyppi = self.io.read("Viitteen tyyppi: ")
 
                 kysyttavat = self.viite_service.anna_tagit(tyyppi)
 
                 tagit = {}
-                for tagi in kysyttavat:
-                    tagit[tagi] = self.io.read(f"{tagi}: ")
+                for fi_nimi, bib_nimi in kysyttavat:
+                    tagit[bib_nimi] = self.io.read(f"{fi_nimi}: ")
 
                 self.viite_service.luo_viite(tyyppi, tagit)
+                self._listaa_viitteet()
+            elif command == "hae":
+                polku = self.io.read("Datalähteen polku (Enter käyttää oletusta): ").strip()
+                try:
+                    maara = self.viite_service.hae_viitteet_tiedostosta(polku or None)
+                    self.io.write(f"Hain {maara} viitettä.")
+                except (FileNotFoundError, ValueError) as err:
+                    self.io.write(f"Virhe: {err}")
+            elif command == "listaa":
+                self._listaa_viitteet()
+            elif command == "bibtex":
+                polku = self.io.read("BibTeX-tiedoston polku (Enter käyttää oletusta): ").strip()
+                kohde = self.viite_service.kirjoita_bibtex(polku or None)
+                self.io.write(f"Tallennettu tiedostoon {kohde}")
+            else:
+                self.io.write("Tuntematon komento.")
 
                 print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
 
@@ -29,3 +58,10 @@ class App:
                 self.viite_service.poista_viite(id)
 
                 print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+    def _listaa_viitteet(self):
+        viitteet = self.viite_service.anna_viitteet()
+        if not viitteet:
+            self.io.write("Ei yhtään viitettä.")
+            return
+                
+        

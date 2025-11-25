@@ -5,6 +5,7 @@ class Viite:
         self.tagit = tagit
 
     def __str__(self):
-        return f"""@{self.tyyppi}{{{self.id},
-{",\n".join([f"{tag} = {{{self.tagit[tag]}}}" for tag in self.tagit])}
-}}"""
+        osat = ",\n".join(
+            [f"{tag} = {{{self.tagit[tag]}}}" for tag in self.tagit]
+        )
+        return f"@{self.tyyppi}{{{self.id},\n{osat}\n}}"
