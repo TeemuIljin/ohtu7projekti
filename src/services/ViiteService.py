@@ -11,7 +11,7 @@ class ViiteService:
     def __init__(self, viite_repository):
         self._viite_repository = viite_repository
         self.viitetyypit = {
-            "article": [
+            ("artikkeli", "article"): [
                 ("kirjoittaja", "author"),
                 ("teoksen nimi", "title"),
                 ("lehti", "journal"),
@@ -19,13 +19,13 @@ class ViiteService:
                 ("vuosikerta", "volume"),
                 ("sivut", "pages")
             ],
-            "book": [
+            ("kirja", "book"): [
                 ("kirjoittaja", "author"),
                 ("teoksen nimi", "title"),
                 ("vuosi", "year"),
                 ("julkaisija", "publisher")
             ],
-            "inproceedings": [
+            ("konferenssi", "inproceedings"): [
                 ("kirjoittaja", "author"),
                 ("teoksen nimi", "title"),
                 ("vuosi", "year"),
@@ -43,7 +43,10 @@ class ViiteService:
         return self._viite_repository.luo(viite)
 
     def anna_tagit(self, tyyppi):
-        return self.viitetyypit[tyyppi]
+        for tyyppi_nimet, tagit in self.viitetyypit.items():
+            if tyyppi in tyyppi_nimet:
+                return tagit
+        return None
 
     def anna_viitteet(self):
         #return self._viite_repository.anna()
@@ -104,5 +107,5 @@ class ViiteService:
         return Viite(viite_id, tyyppi, tagit)
 
     def _varmista_tyyppi(self, tyyppi):
-        if tyyppi not in self.viitetyypit:
+        if not self.anna_tagit(tyyppi):
             raise ValueError(f"Tuntematon viitetyyppi: {tyyppi}")
