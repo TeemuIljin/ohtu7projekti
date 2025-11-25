@@ -36,6 +36,7 @@ class App:
 
                 self.viite_service.luo_viite(tyyppi, tagit)
                 self._listaa_viitteet()
+
             elif command == "hae":
                 polku = self.io.read("Datalähteen polku (Enter käyttää oletusta): ").strip()
                 try:
@@ -43,23 +44,28 @@ class App:
                     self.io.write(f"Hain {maara} viitettä.")
                 except (FileNotFoundError, ValueError) as err:
                     self.io.write(f"Virhe: {err}")
+
             elif command == "listaa":
                 self._listaa_viitteet()
+
             elif command == "bibtex":
                 polku = self.io.read("BibTeX-tiedoston polku (Enter käyttää oletusta): ").strip()
                 kohde = self.viite_service.kirjoita_bibtex(polku or None)
                 self.io.write(f"Tallennettu tiedostoon {kohde}")
+        
+            elif command == "poista":
+                title = self.io.read("Poistettavan viitteen nimi: ")
+                poistettu = self.viite_service.poista_viite(title)
+                if poistettu:
+                    self.io.write(f"Viite: '{title}' poistettu.")
+                else:
+                    self.io.write(f"Viitettä: '{title}' ei löydetty.")
+ 
             else:
                 self.io.write("Tuntematon komento.")
 
                 print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
 
-            if command == "poista":
-                
-                id = self.io.read("Viitteen tunniste: ")
-                self.viite_service.poista_viite(id)
-
-                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
 
     def _listaa_viitteet(self):
         viitteet = self.viite_service.anna_viitteet()
