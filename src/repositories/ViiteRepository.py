@@ -16,6 +16,12 @@ class ViiteRepository:
     def poista(self, tunniste):
         self._viitteet = [v for v in self._viitteet if v.tunniste != tunniste]
         return True
+    
+    def etsi(self, muokattava):
+        for viite in self._viitteet:
+            if viite.tagit['title'] == muokattava:
+                return viite
+        return None
 
 
 # -> klo 12.13

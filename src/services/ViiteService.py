@@ -56,13 +56,12 @@ class ViiteService:
                 v.tagit.get("title", "").lower()
             )
         )
-
-        return self._viite_repository.anna()
     
     def poista_viite(self, tunniste):
         return self._viite_repository.poista(tunniste)
-    def muokkaa_tagia(self, id, tagi, arvo):
-        viite = self._viite_repository.etsi_id(id)
+    
+    def muokkaa_tagia(self, muokattava, tagi, arvo):
+        viite = self._viite_repository.etsi(muokattava)
         if viite and tagi in viite.tagit:
             viite.tagit[tagi] = arvo
             self._viite_repository.tallenna(viite)

@@ -14,16 +14,6 @@ class App:
 
             if command == "lopeta":
                 break
-
-            if command == "muokkaa":
-                id = self.io.read("Muokattavan viitteen id: ")
-                tagi = self.io.read("Muokattava tagi: ")
-                arvo = self.io.read("Uusi arvo: ")
-
-                self.viite_service.muokkaa_tagia(id, tagi, arvo)
-
-                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
-                self.io.write("\n\n".join(map(str, viitteet)))
                 
             if command == "uusi":
                 tyyppi = self.io.read("Viitteen tyyppi: ")
@@ -36,6 +26,17 @@ class App:
 
                 self.viite_service.luo_viite(tyyppi, tagit)
                 self._listaa_viitteet()
+                
+            elif command == "muokkaa":
+                muokattava = self.io.read("Muokattavan viite: ")
+                tagi = self.io.read("Mitä viitteestä muokataan: ")
+                arvo = self.io.read("Uusi arvo: ")
+
+                self.viite_service.muokkaa_tagia(muokattava, tagi, arvo)
+
+                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+                self.io.write("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+                
             elif command == "hae":
                 polku = self.io.read("Datalähteen polku (Enter käyttää oletusta): ").strip()
                 try:
@@ -43,12 +44,15 @@ class App:
                     self.io.write(f"Hain {maara} viitettä.")
                 except (FileNotFoundError, ValueError) as err:
                     self.io.write(f"Virhe: {err}")
+                    
             elif command == "listaa":
                 self._listaa_viitteet()
+                
             elif command == "bibtex":
                 polku = self.io.read("BibTeX-tiedoston polku (Enter käyttää oletusta): ").strip()
                 kohde = self.viite_service.kirjoita_bibtex(polku or None)
                 self.io.write(f"Tallennettu tiedostoon {kohde}")
+                
             else:
                 self.io.write("Tuntematon komento.")
 
