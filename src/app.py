@@ -4,11 +4,13 @@ class App:
         self.io = io
 
     def run(self):
-        self.io.write("Komennot: uusi, hae, listaa, bibtex, lopeta")
+        self.io.write("Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, lopeta")
 
         while True:
+            command = self.io.read("> ")
+
             if not command:
-                continue
+                break
 
             if command == "lopeta":
                 break
@@ -58,6 +60,7 @@ class App:
                 self.viite_service.poista_viite(id)
 
                 print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+
     def _listaa_viitteet(self):
         viitteet = self.viite_service.anna_viitteet()
         if not viitteet:
