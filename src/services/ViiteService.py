@@ -38,10 +38,10 @@ class ViiteService:
         viite = self._rakenna_viite(tyyppi, tagit)
         return self._viite_repository.luo(viite)
 
-    def anna_tagit(self, tyyppi):
+    def anna_tagit_ja_bib_tyyppi(self, tyyppi):
         for tyyppi_nimet, tagit in self.viitetyypit.items():
             if tyyppi in tyyppi_nimet:
-                return tagit
+                return (tyyppi_nimet[1], tagit)
         return None
 
     def anna_viitteet(self):
@@ -102,5 +102,5 @@ class ViiteService:
         return Viite(viite_id, tyyppi, tagit)
 
     def _varmista_tyyppi(self, tyyppi):
-        if not self.anna_tagit(tyyppi):
+        if not self.anna_tagit_ja_bib_tyyppi(tyyppi):
             raise ValueError(f"Tuntematon viitetyyppi: {tyyppi}")

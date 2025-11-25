@@ -28,13 +28,13 @@ class App:
             if command == "uusi":
                 tyyppi = self.io.read("Viitteen tyyppi: ")
 
-                kysyttavat = self.viite_service.anna_tagit(tyyppi)
+                (bib_tyyppi, kysyttavat) = self.viite_service.anna_tagit_ja_bib_tyyppi(tyyppi)
 
                 tagit = {}
                 for fi_nimi, bib_nimi in kysyttavat:
                     tagit[bib_nimi] = self.io.read(f"{fi_nimi}: ")
 
-                self.viite_service.luo_viite(tyyppi, tagit)
+                self.viite_service.luo_viite(bib_tyyppi, tagit)
                 self._listaa_viitteet()
             elif command == "hae":
                 polku = self.io.read("Datalähteen polku (Enter käyttää oletusta): ").strip()
