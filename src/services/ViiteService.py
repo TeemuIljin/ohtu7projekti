@@ -34,6 +34,10 @@ class ViiteService:
         }
 
     def luo_viite(self, tyyppi, tagit):
+        return self._viite_repository.luo(
+            Viite(tagit['author'].replace(" ", "") +
+                tagit['year'], tyyppi, tagit)
+        )
         self._varmista_tyyppi(tyyppi)
         viite = self._rakenna_viite(tyyppi, tagit)
         return self._viite_repository.luo(viite)
@@ -53,6 +57,13 @@ class ViiteService:
             )
         )
 
+        return self._viite_repository.anna()
+    
+    def muokkaa_tagia(self, id, tagi, arvo):
+        viite = self._viite_repository.etsi_id(id)
+        if viite and tagi in viite.tagit:
+            viite.tagit[tagi] = arvo
+            self._viite_repository.tallenna(viite)
 
     def hae_viitteet_tiedostosta(self, polku=None):
         lahde = Path(polku) if polku else self.OLETUS_DATA

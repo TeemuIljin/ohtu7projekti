@@ -15,6 +15,16 @@ class App:
             if command == "lopeta":
                 break
 
+            if command == "muokkaa":
+                id = self.io.read("Muokattavan viitteen id: ")
+                tagi = self.io.read("Muokattava tagi: ")
+                arvo = self.io.read("Uusi arvo: ")
+
+                self.viite_service.muokkaa_tagia(id, tagi, arvo)
+
+                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+                self.io.write("\n\n".join(map(str, viitteet)))
+                
             if command == "uusi":
                 tyyppi = self.io.read("Viitteen tyyppi: ")
 
@@ -47,5 +57,5 @@ class App:
         if not viitteet:
             self.io.write("Ei yhtään viitettä.")
             return
-
-        self.io.write("\n\n".join(map(str, viitteet)))
+                
+        
