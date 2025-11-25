@@ -34,10 +34,6 @@ class ViiteService:
         }
 
     def luo_viite(self, tyyppi, tagit):
-        return self._viite_repository.luo(
-            Viite(tagit['author'].replace(" ", "") +
-                tagit['year'], tyyppi, tagit)
-        )
         self._varmista_tyyppi(tyyppi)
         viite = self._rakenna_viite(tyyppi, tagit)
         return self._viite_repository.luo(viite)
@@ -49,7 +45,6 @@ class ViiteService:
         return None
 
     def anna_viitteet(self):
-        #return self._viite_repository.anna()
         viitteet = self._viite_repository.anna()
 
         return sorted(
@@ -60,10 +55,9 @@ class ViiteService:
             )
         )
 
-        return self._viite_repository.anna()
-    
     def poista_viite(self, tunniste):
         return self._viite_repository.poista(tunniste)
+
     def muokkaa_tagia(self, id, tagi, arvo):
         viite = self._viite_repository.etsi_id(id)
         if viite and tagi in viite.tagit:
@@ -82,7 +76,8 @@ class ViiteService:
             tyyppi = entry.get("type")
             tagit = entry.get("tags")
             if not tyyppi or not tagit:
-                raise ValueError("Jokaisella viitteellä pitää olla type ja tags")
+                raise ValueError(
+                    "Jokaisella viitteellä pitää olla type ja tags")
 
             self.luo_viite(tyyppi, tagit)
             lisatyt += 1
