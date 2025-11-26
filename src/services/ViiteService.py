@@ -11,7 +11,7 @@ class ViiteService:
     def __init__(self, viite_repository):
         self._viite_repository = viite_repository
         self.viitetyypit = {
-            "article": [
+            ("artikkeli", "article"): [
                 ("kirjoittaja", "author"),
                 ("teoksen nimi", "title"),
                 ("lehti", "journal"),
@@ -19,13 +19,13 @@ class ViiteService:
                 ("vuosikerta", "volume"),
                 ("sivut", "pages")
             ],
-            "book": [
+            ("kirja", "book"): [
                 ("kirjoittaja", "author"),
                 ("teoksen nimi", "title"),
                 ("vuosi", "year"),
                 ("julkaisija", "publisher")
             ],
-            "inproceedings": [
+            ("konferenssi", "inproceedings"): [
                 ("kirjoittaja", "author"),
                 ("teoksen nimi", "title"),
                 ("vuosi", "year"),
@@ -34,19 +34,19 @@ class ViiteService:
         }
 
     def luo_viite(self, tyyppi, tagit):
-        return self._viite_repository.luo(
-            Viite(tagit['author'].replace(" ", "") +
-                tagit['year'], tyyppi, tagit)
-        )
         self._varmista_tyyppi(tyyppi)
         viite = self._rakenna_viite(tyyppi, tagit)
-        return self._viite_repository.luo(viite)
+        luotu_viite = self._viite_repository.luo(viite)
+        self.kirjoita_bibtex()
+        return luotu_viite
 
-    def anna_tagit(self, tyyppi):
-        return self.viitetyypit[tyyppi]
+    def anna_tagit_ja_bib_tyyppi(self, tyyppi):
+        for tyyppi_nimet, tagit in self.viitetyypit.items():
+            if tyyppi in tyyppi_nimet:
+                return (tyyppi_nimet[1], tagit)
+        return None
 
     def anna_viitteet(self):
-        #return self._viite_repository.anna()
         viitteet = self._viite_repository.anna()
 
         return sorted(
@@ -57,10 +57,9 @@ class ViiteService:
             )
         )
 
-        return self._viite_repository.anna()
-    
     def poista_viite(self, tunniste):
         return self._viite_repository.poista(tunniste)
+
     def muokkaa_tagia(self, id, tagi, arvo):
         viite = self._viite_repository.etsi_id(id)
         if viite and tagi in viite.tagit:
@@ -79,7 +78,8 @@ class ViiteService:
             tyyppi = entry.get("type")
             tagit = entry.get("tags")
             if not tyyppi or not tagit:
-                raise ValueError("Jokaisella viitteellä pitää olla type ja tags")
+                raise ValueError(
+                    "Jokaisella viitteellä pitää olla type ja tags")
 
             self.luo_viite(tyyppi, tagit)
             lisatyt += 1
@@ -104,5 +104,5 @@ class ViiteService:
         return Viite(viite_id, tyyppi, tagit)
 
     def _varmista_tyyppi(self, tyyppi):
-        if tyyppi not in self.viitetyypit:
+        if not self.anna_tagit_ja_bib_tyyppi(tyyppi):
             raise ValueError(f"Tuntematon viitetyyppi: {tyyppi}")

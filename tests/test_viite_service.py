@@ -53,3 +53,37 @@ def test_kirjoita_bibtex_luo_tiedoston():
         sisalto = kohde.read_text(encoding="utf-8")
         assert "AnttiTuuri1984" in sisalto
 
+
+def test_luo_viite():
+    service = luo_palvelu()
+    tyyppi = "book"
+    tagit = {
+        "author": "Testi Testinen",
+        "title": "Missä on puu?",
+        "year": "1997",
+        "publisher": "WSOY"
+    }
+
+    viite = service.luo_viite(tyyppi, tagit)
+    viite_str = str(viite)
+
+    assert viite_str.startswith("@book{TestiTestinen1997,")
+    assert "author = {Testi Testinen}," in viite_str
+    assert "title = {Missä on puu?}," in viite_str
+    assert "year = {1997}," in viite_str
+    assert "publisher = {WSOY}" in viite_str
+    assert viite_str.endswith("}")
+
+
+def test_anna_tagit_ja_bib_tyyppi():
+    service = luo_palvelu()
+
+    (bib_tyyppi, tagit) = service.anna_tagit_ja_bib_tyyppi("kirja")
+
+    assert bib_tyyppi == "book"
+    assert tagit == [
+        ("kirjoittaja", "author"),
+        ("teoksen nimi", "title"),
+        ("vuosi", "year"),
+        ("julkaisija", "publisher")
+    ]
