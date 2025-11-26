@@ -36,7 +36,9 @@ class ViiteService:
     def luo_viite(self, tyyppi, tagit):
         self._varmista_tyyppi(tyyppi)
         viite = self._rakenna_viite(tyyppi, tagit)
-        return self._viite_repository.luo(viite)
+        luotu_viite = self._viite_repository.luo(viite)
+        self.kirjoita_bibtex()
+        return luotu_viite
 
     def anna_tagit_ja_bib_tyyppi(self, tyyppi):
         for tyyppi_nimet, tagit in self.viitetyypit.items():
