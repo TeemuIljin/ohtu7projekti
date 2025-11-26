@@ -46,7 +46,7 @@ class App:
                     self.io.write(f"Virhe: {err}")
 
             elif command == "listaa":
-                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+                self._listaa_viitteet()
 
             elif command == "bibtex":
                 polku = self.io.read("BibTeX-tiedoston polku (Enter käyttää oletusta): ").strip()
@@ -72,5 +72,6 @@ class App:
         if not viitteet:
             self.io.write("Ei yhtään viitettä.")
             return
+        else: print("\n\n".join(map(str, viitteet)))
                 
         

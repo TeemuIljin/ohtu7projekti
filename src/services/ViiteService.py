@@ -53,7 +53,7 @@ class ViiteService:
             viitteet,
             key=lambda v: (
                 v.tyyppi.lower(),
-                (v.tagit.get("title") or v.tagit.get("teoksen nimi") or "").lower()
+                v.tagit.get("title", "").lower()
             )
         )
 
