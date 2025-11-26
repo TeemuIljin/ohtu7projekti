@@ -4,7 +4,7 @@ class App:
         self.io = io
 
     def run(self):
-        self.io.write("Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, lopeta")
+        self.io.write("Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta")
 
         while True:
             command = self.io.read("> ")
@@ -60,6 +60,10 @@ class App:
                     self.io.write(f"Viite: '{title}' poistettu.")
                 else:
                     self.io.write(f"Viitettä: '{title}' ei löydetty.")
+
+            elif command == "hae nimella":
+                hakusana = self.io.read("Haettavan viitteen nimi tai osa nimestä: ")
+                self.viite_service.hae_nimea(hakusana)
  
             else:
                 self.io.write("Tuntematon komento.")
