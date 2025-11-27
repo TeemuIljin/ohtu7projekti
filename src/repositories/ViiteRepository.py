@@ -13,16 +13,24 @@ class ViiteRepository:
     def anna(self):
         return self._viitteet
     
-    def poista(self, tunniste):
-        self._viitteet = [v for v in self._viitteet if v.tunniste != tunniste]
-        return True
-    
     def etsi(self, muokattava):
         for viite in self._viitteet:
-            if viite.tagit['title'] == muokattava:
+            if viite.tagit.get('title') == muokattava:
                 return viite
-        return None
+        return "Viitettä ei löytynyt."
+    
+    def poista(self, title):
+        for viite in self._viitteet:
+            if viite.tagit.get('title') == title:
+                self._viitteet.remove(viite)
+                return True
+        return False
 
+    def tallenna(self, viite):
+        for i, v in enumerate(self._viitteet):
+            if v.tagit.get('title') == viite.tagit.get('title'):
+                self._viitteet[i] = viite
+                return viite
 
-# -> klo 12.13
-# klo 14.57 ->
+        self._viitteet.append(viite)
+        return viite
