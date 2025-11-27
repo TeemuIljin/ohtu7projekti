@@ -63,7 +63,12 @@ class App:
 
             elif command == "hae nimella":
                 hakusana = self.io.read("Haettavan viitteen nimi tai osa nimestä: ")
-                self.viite_service.hae_nimea(hakusana)
+                tulokset = self.viite_service.hae_nimea(hakusana)
+                if not tulokset:
+                    print("Ei hakua vastaavia viitteita")
+                else:
+                    for viite in tulokset:
+                        print(f"{viite}\n")
  
             else:
                 self.io.write("Tuntematon komento.")
