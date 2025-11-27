@@ -58,7 +58,10 @@ class ViiteService:
         )
         
     def poista_viite(self, tunniste):
-        return self._viite_repository.poista(tunniste)
+        poistettu = self._viite_repository.poista(tunniste)
+        if poistettu:
+            self.kirjoita_bibtex()
+        return poistettu
 
     def muokkaa_tagia(self, muokattava, tagi, arvo):
         viite = self._viite_repository.etsi(muokattava)
