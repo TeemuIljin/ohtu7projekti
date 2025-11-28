@@ -118,3 +118,21 @@ class ViiteService:
     def _varmista_tyyppi(self, tyyppi):
         if not self.anna_tagit_ja_bib_tyyppi(tyyppi):
             raise ValueError(f"Tuntematon viitetyyppi: {tyyppi}")
+
+    def hae_nimea(self, hakusana):
+        hakusana = hakusana.strip()
+        if len(hakusana) < 1:
+            raise ValueError("hakusanan täytyy olla vähintään yksi kirjain tai merkki")
+        
+        tulokset = self._viite_repository.osittaishaku(hakusana)
+
+        return sorted(
+            tulokset,
+            key=lambda v: (
+                v.tyyppi.lower(),
+                v.tagit.get("title", "").lower()
+            )
+        )
+
+        
+        
