@@ -56,15 +56,27 @@ class ViiteService:
                 v.tagit.get("title", "").lower()
             )
         )
-
+        
     def poista_viite(self, tunniste):
         return self._viite_repository.poista(tunniste)
 
-    def muokkaa_tagia(self, id, tagi, arvo):
-        viite = self._viite_repository.etsi_id(id)
+    def muokkaa_tagia(self, muokattava, tagi, arvo):
+        viite = self._viite_repository.etsi(muokattava)
+
+        if tagi not in viite.tagit:
+            for _, tagiparit in self.viitetyypit.items():
+                for fi_nimi, bib_nimi in tagiparit:
+                    if fi_nimi == tagi:
+                        tagi = bib_nimi
+                        break
+                if tagi in viite.tagit:
+                    break
+                
         if viite and tagi in viite.tagit:
             viite.tagit[tagi] = arvo
             self._viite_repository.tallenna(viite)
+            self.kirjoita_bibtex()
+            return viite
 
     def hae_viitteet_tiedostosta(self, polku=None):
         lahde = Path(polku) if polku else self.OLETUS_DATA
