@@ -22,6 +22,11 @@ class App:
                 (bib_tyyppi, kysyttavat) = self.viite_service.anna_tagit_ja_bib_tyyppi(
                     tyyppi)
 
+                # Jos tyyppiä ei ole, lopetetaan
+                if kysyttavat is None:
+                    self.io.write(f"Tyyppiä {tyyppi} ei ole olemassa")
+                    continue
+
                 tagit = {}
                 for fi_nimi, bib_nimi in kysyttavat:
                     tagit[bib_nimi] = self.io.read(f"{fi_nimi}: ")

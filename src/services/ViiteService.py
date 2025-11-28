@@ -82,7 +82,7 @@ class ViiteService:
         for tyyppi_nimet, tagit in self.viitetyypit.items():
             if tyyppi in tyyppi_nimet:
                 return (tyyppi_nimet[1], tagit)
-        return None
+        return (None, None)
 
     def anna_viitteet(self):
         viitteet = self._viite_repository.anna()
