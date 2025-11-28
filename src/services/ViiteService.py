@@ -33,6 +33,44 @@ class ViiteService:
             ]
         }
 
+        self.tagityypit = {
+            "osoite": "address",
+            "lisähuomautus": "annote",
+            "kirjoittaja": "author",
+            "julkaisu": "booktitle",
+            "luku": "chapter",
+            "painos": "edition",
+            "toimittaja": "editor",
+            "julkaisumuoto": "howpublished",
+            "laitos": "institution",
+            "lehti": "journal",
+            "kuukausi": "month",
+            "huomautus": "note",
+            "numero": "number",
+            "organisaatio": "organization",
+            "sivut": "pages",
+            "julkaisija": "publisher",
+            "oppilaitos": "school",
+            "sarja": "series",
+            "teoksen nimi": "title",
+            "tyyppi": "type",
+            "vuosikerta": "volume",
+            "vuosi": "year",
+        }
+
+    def anna_fi_nimi_ja_bib_nimi(self, tagi):
+        """
+        Palauttaa monikon, jossa on tagin
+        suomenkielinen nimi ja bibtex-nimi
+
+        :param tagi: tagi, jonka mukaan haetaan
+        """
+        for tagi_nimet in self.tagityypit.items():
+            if tagi in tagi_nimet:
+                return tagi_nimet
+
+        return (None, None)
+
     def luo_viite(self, tyyppi, tagit):
         self._varmista_tyyppi(tyyppi)
         viite = self._rakenna_viite(tyyppi, tagit)
@@ -56,7 +94,7 @@ class ViiteService:
                 v.tagit.get("title", "").lower()
             )
         )
-        
+
     def poista_viite(self, tunniste):
         return self._viite_repository.poista(tunniste)
 
@@ -71,7 +109,7 @@ class ViiteService:
                         break
                 if tagi in viite.tagit:
                     break
-                
+
         if viite and tagi in viite.tagit:
             viite.tagit[tagi] = arvo
             self._viite_repository.tallenna(viite)
