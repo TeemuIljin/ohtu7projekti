@@ -15,21 +15,86 @@ class ViiteService:
                 ("kirjoittaja", "author"),
                 ("teoksen nimi", "title"),
                 ("lehti", "journal"),
-                ("vuosi", "year"),
-                ("vuosikerta", "volume"),
-                ("sivut", "pages")
+                ("vuosi", "year")
             ],
+
             ("kirja", "book"): [
                 ("kirjoittaja", "author"),
                 ("teoksen nimi", "title"),
-                ("vuosi", "year"),
-                ("julkaisija", "publisher")
+                ("julkaisija", "publisher"),
+                ("vuosi", "year")
             ],
+
+            ("vihkonen", "booklet"): [
+                ("teoksen nimi", "title")
+            ],
+
+            ("kirjan osa", "inbook"): [
+                ("kirjoittaja", "author"),
+                ("teoksen nimi", "title"),
+                ("julkaisija", "publisher"),
+                ("vuosi", "year")
+            ],
+
+            ("artikkeli kirjassa", "incollection"): [
+                ("kirjoittaja", "author"),
+                ("teoksen nimi", "title"),
+                ("julkaisu", "booktitle"),
+                ("julkaisija", "publisher"),
+                ("vuosi", "year")
+            ],
+
             ("konferenssi", "inproceedings"): [
                 ("kirjoittaja", "author"),
                 ("teoksen nimi", "title"),
-                ("vuosi", "year"),
-                ("julkaisu", "booktitle")
+                ("julkaisu", "booktitle"),
+                ("vuosi", "year")
+            ],
+
+            ("konferenssi", "conference"): [
+                ("kirjoittaja", "author"),
+                ("teoksen nimi", "title"),
+                ("julkaisu", "booktitle"),
+                ("vuosi", "year")
+            ],
+
+            ("käsikirja", "manual"): [
+                ("teoksen nimi", "title"),
+                ("vuosi", "year")
+            ],
+
+            ("pro gradu", "mastersthesis"): [
+                ("kirjoittaja", "author"),
+                ("teoksen nimi", "title"),
+                ("oppilaitos", "school"),
+                ("vuosi", "year")
+            ],
+
+            ("väitöskirja", "phdthesis"): [
+                ("kirjoittaja", "author"),
+                ("teoksen nimi", "title"),
+                ("oppilaitos", "school"),
+                ("vuosi", "year")
+            ],
+
+            ("tekninen raportti", "techreport"): [
+                ("kirjoittaja", "author"),
+                ("teoksen nimi", "title"),
+                ("organisaatio", "institution"),
+                ("vuosi", "year")
+            ],
+
+            ("sekalaista", "misc"): [],
+
+            ("julkaisukokoelma", "proceedings"): [
+                ("teoksen nimi", "title"),
+                ("vuosi", "year")
+            ],
+
+            ("julkaisematon", "unpublished"): [
+                ("kirjoittaja", "author"),
+                ("teoksen nimi", "title"),
+                ("huomautus", "note")
             ]
         }
 
