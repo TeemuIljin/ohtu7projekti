@@ -88,14 +88,15 @@ class App:
                     self.io.write(f"Viitettä: '{title}' ei löydetty.")
 
             elif command == "hae nimella":
-                hakusana = self.io.read("Haettavan viitteen nimi tai osa nimestä: ")
+                hakusana = self.io.read(
+                    "Haettavan viitteen nimi tai osa nimestä: ")
                 tulokset = self.viite_service.hae_nimea(hakusana)
                 if not tulokset:
                     print("Ei hakua vastaavia viitteita")
                 else:
                     for viite in tulokset:
                         print(f"{viite}\n")
- 
+
             else:
                 self.io.write("Tuntematon komento.")
 
@@ -106,6 +107,5 @@ class App:
         if not viitteet:
             self.io.write("Ei yhtään viitettä.")
             return
-        else: print("\n\n".join(map(str, viitteet)))
-                
-        
+        else:
+            print("\n\n".join(map(str, viitteet)))
