@@ -26,6 +26,17 @@ class ViiteRepository:
                 return True
         return False
 
+    def osittaishaku(self, hakusana):
+        hakusana = hakusana.lower()
+        tulokset = []
+
+        for viite in self._viitteet:
+            title = viite.tagit.get('title', '').lower()
+            if hakusana in title:
+                tulokset.append(viite)
+        
+        return tulokset
+
     def tallenna(self, viite):
         for i, v in enumerate(self._viitteet):
             if v.tagit.get('title') == viite.tagit.get('title'):
