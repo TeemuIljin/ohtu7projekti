@@ -84,6 +84,6 @@ def test_anna_tagit_ja_bib_tyyppi():
     assert tagit == [
         ("kirjoittaja", "author"),
         ("teoksen nimi", "title"),
-        ("vuosi", "year"),
-        ("julkaisija", "publisher")
+        ("julkaisija", "publisher"),
+        ("vuosi", "year")
     ]
