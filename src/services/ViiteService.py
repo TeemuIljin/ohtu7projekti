@@ -209,13 +209,11 @@ class ViiteService:
         return kohde
 
     def _rakenna_viite(self, tyyppi, tagit):
-        author = tagit.get("author")
-        year = tagit.get("year")
+        kirjoittaja = tagit.get("author")
+        vuosi = tagit.get("year")
 
-        if not author or not year:
-            raise ValueError("Kirjoittaja ja vuosi ovat pakolliset kentät")
+        viite_id = self._viite_repository.anna_vapaa_viite_id(kirjoittaja, vuosi)
 
-        viite_id = f"{author.replace(' ', '')}{year}"
         return Viite(viite_id, tyyppi, tagit)
 
     def _varmista_tyyppi(self, tyyppi):
@@ -225,8 +223,9 @@ class ViiteService:
     def hae_nimea(self, hakusana):
         hakusana = hakusana.strip()
         if len(hakusana) < 1:
-            raise ValueError("hakusanan täytyy olla vähintään yksi kirjain tai merkki")
-        
+            raise ValueError(
+                "hakusanan täytyy olla vähintään yksi kirjain tai merkki")
+
         tulokset = self._viite_repository.osittaishaku(hakusana)
 
         return sorted(
@@ -236,6 +235,3 @@ class ViiteService:
                 v.tagit.get("title", "").lower()
             )
         )
-
-        
-        
