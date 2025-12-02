@@ -224,11 +224,6 @@ class ViiteService:
             raise ValueError(f"Tuntematon viitetyyppi: {tyyppi}")
 
     def hae_nimea(self, hakusana):
-        hakusana = hakusana.strip()
-        if len(hakusana) < 1:
-            raise ValueError(
-                "hakusanan täytyy olla vähintään yksi kirjain tai merkki")
-
         tulokset = self._viite_repository.osittaishaku(hakusana)
 
         return sorted(
