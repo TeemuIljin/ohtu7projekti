@@ -80,8 +80,8 @@ class App:
                 self.io.write(f"Tallennettu tiedostoon {kohde}")
 
             elif command == "poista":
-                title = self.io.read("Poistettavan viitteen nimi: ")
-                poistettu = self.viite_service.poista_viite(title)
+                title = self.io.read("Poistettavan viitteen nimi: ") ##Kysytään poistettaan viitteen nimi
+                poistettu = self.viite_service.poista_viite(title) 
                 if poistettu:
                     self.io.write(f"Viite: '{title}' poistettu.")
                 else:

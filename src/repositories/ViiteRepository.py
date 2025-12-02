@@ -23,8 +23,8 @@ class ViiteRepository:
 
     def poista(self, title):
         for viite in self._viitteet:
-            if viite.tagit.get('title') == title:
-                self._viitteet.remove(viite)
+            if viite.tagit.get('title') == title: ##Etsitään käyttäjän antamalla nimellä viitettä
+                self._viitteet.remove(viite) ##Poistetaan viite listasta
                 return True
         return False
 
