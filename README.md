@@ -5,9 +5,94 @@
 Linkki backlogiin Excel: https://jyu-my.sharepoint.com/:x:/r/personal/iljitesa_jyu_fi/Documents/StructuredBacklog%20ohtu%207.xlsx?d=wd9a28a0385564261a8bed77b9cbf1c47&csf=1&web=1&e=WYMvp9
 
 ## Definition of Done
-  - Koodi on yhdistetty mainiin
-  - Kaikki hyväksymäkriteerit on toteutettu
-  - Testit on totetutettu ja ne läpäisevät tarkistukset
-  - Luodut ominaisuudet toimivat oikein
-  - Ohjelma toimii paikallisessa ympäristössä
-  
+
+- Koodi on yhdistetty mainiin
+- Kaikki hyväksymäkriteerit on toteutettu
+- Testit on totetutettu ja ne läpäisevät tarkistukset
+- Luodut ominaisuudet toimivat oikein
+- Ohjelma toimii paikallisessa ympäristössä
+
+## Käyttöohjeet
+
+### Uuden viitteen luominen
+
+Uuden viitteen luominen tapahtuu komennolla `uusi`.
+
+Ohjelma kysyy viitteen tyyppiä ja siihen liittyviä pakollisten tagien arvoja. Tämän jälkeen on mahdollista antaa valinnaisia tageja, jotka ohjelma kysyy yksi kerrallaan. Kun olet valmis, jätä kysymys "Valinnainen tagi" tyhjäksi.
+
+Sekä viitetyypin että tagin voi antaa suomeksi tai englanniksi. Ohjelma ymmärtää molemmat
+
+#### Viitetyyppivaihtoehdot:
+
+| suomeksi             | englanniksi     |
+| -------------------- | --------------- |
+| `artikkeli`          | `article`       |
+| `kirja`              | `book`          |
+| `vihkonen`           | `booklet`       |
+| `kirjan osa`         | `inbook`        |
+| `artikkeli kirjassa` | `incollection`  |
+| `konferenssi`        | `inproceedings` |
+| `konferenssi`        | `conference`    |
+| `käsikirja`          | `manual`        |
+| `pro gradu`          | `mastersthesis` |
+| `väitöskirja`        | `phdthesis`     |
+| `tekninen raportti`  | `techreport`    |
+| `sekalaista`         | `misc`          |
+| `julkaisukokoelma`   | `proceedings`   |
+| `julkaisematon`      | `unpublished`   |
+
+#### Tagivaihtoehdot:
+
+| suomeksi        | englanniksi    |
+| --------------- | -------------- |
+| `osoite`        | `address`      |
+| `lisähuomautus` | `annote`       |
+| `kirjoittaja`   | `author`       |
+| `julkaisu`      | `booktitle`    |
+| `luku`          | `chapter`      |
+| `painos`        | `edition`      |
+| `toimittaja`    | `editor`       |
+| `julkaisumuoto` | `howpublished` |
+| `laitos`        | `institution`  |
+| `lehti`         | `journal`      |
+| `kuukausi`      | `month`        |
+| `huomautus`     | `note`         |
+| `numero`        | `number`       |
+| `organisaatio`  | `organization` |
+| `sivut`         | `pages`        |
+| `julkaisija`    | `publisher`    |
+| `oppilaitos`    | `school`       |
+| `sarja`         | `series`       |
+| `teoksen nimi`  | `title`        |
+| `tyyppi`        | `type`         |
+| `vuosikerta`    | `volume`       |
+| `vuosi`         | `year`         |
+
+#### Käyttöesimerkki
+
+```
+> uusi
+Viitteen tyyppi: kirja
+kirjoittaja: Sofi Oksanen
+teoksen nimi: Puhdistus
+julkaisija: WSOY
+vuosi: 2008
+Valinnainen tagi: painos
+painos: 3
+Valinnainen tagi: sivut
+sivut: 10-30
+Valinnainen tagi: [enter]
+```
+
+Nyt viite on luotu. Esimerkin tapauksessa ohjelma loi BibTeX-formaatin mukaisen viitteen:
+
+```
+@book{SofiOksanen2008,
+  author = {Sofi Oksanen},
+  title = {Puhdistus},
+  publisher = {WSOY},
+  year = {2008},
+  edition = {3},
+  pages = {10-30}
+}
+```
