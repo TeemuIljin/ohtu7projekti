@@ -90,12 +90,16 @@ class App:
             elif command == "hae nimella":
                 hakusana = self.io.read(
                     "Haettavan viitteen nimi tai osa nimestä: ")
-                tulokset = self.viite_service.hae_nimea(hakusana)
-                if not tulokset:
-                    print("Ei hakua vastaavia viitteita")
-                else:
-                    for viite in tulokset:
-                        print(f"{viite}\n")
+                hakusana = hakusana.strip()
+                if len(hakusana) >= 1:
+                    tulokset = self.viite_service.hae_nimea(hakusana)
+                    if not tulokset:
+                        print("Ei hakua vastaavia viitteita")
+                    else:
+                        for viite in tulokset:
+                            print(f"{viite}\n")
+                else: 
+                    print("hakusanan täytyy olla vähintään yksi kirjain tai merkki")
 
             else:
                 self.io.write("Tuntematon komento.")
