@@ -84,6 +84,27 @@ def test_anna_tagit_ja_bib_tyyppi():
     assert tagit == [
         ("kirjoittaja", "author"),
         ("teoksen nimi", "title"),
-        ("vuosi", "year"),
-        ("julkaisija", "publisher")
+        ("julkaisija", "publisher"),
+        ("vuosi", "year")
     ]
+
+def test_poista_viite():
+    service = luo_palvelu()
+
+##Luodaan uusi viite
+    service.luo_viite(
+        "book",
+        {
+            "author": "Antti Tuuri",
+            "title": "Talvisota",
+            "year": "1984",
+            "publisher": "Otava"
+        })
+
+##Poistetaan viite    
+    service.poista_viite("Talvisota")
+
+##Tarkistetaan etä viite on poistunut
+    viitteet = service.anna_viitteet()
+
+    assert len(viitteet) == 0
