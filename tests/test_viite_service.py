@@ -148,7 +148,7 @@ def test_hae_nimella_kun_ei_ole_nimia():
 def test_hae_nimella_kun_ei_vastaavia_nimia():
     service= luo_palvelu()
 
-    service.luo_viite(
+    v1 = service.luo_viite(
         "book",
         {
             "author": "kirjoittaja",
@@ -162,4 +162,3 @@ def test_hae_nimella_kun_ei_vastaavia_nimia():
 
     #ei pitäisis löytyä yhtään viitetta
     assert tulos == []
-    
