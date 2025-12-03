@@ -5,7 +5,7 @@ class App:
 
     def run(self):
         self.io.write(
-            "Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta")
+            "Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, suodata, lopeta")
 
         while True:
             command = self.io.read("> ")
@@ -100,6 +100,20 @@ class App:
                             print(f"{viite}\n")
                 else: 
                     print("hakusanan täytyy olla vähintään yksi kirjain tai merkki")
+
+            elif command == "suodata":
+                self.io.write("Suodatuskriteerit (jätä tyhjäksi ohittaaksesi):")
+                tyyppi = self.io.read("Viitteen tyyppi: ").strip() or None
+                vuosi = self.io.read("Vuosi: ").strip() or None
+                kirjoittaja = self.io.read("Kirjoittaja: ").strip() or None
+
+                tulokset = self.viite_service.suodata(tyyppi, vuosi, kirjoittaja)
+
+                if not tulokset:
+                    self.io.write("Ei suodatusta vastaavia viitteitä.")
+                else:
+                    self.io.write(f"Löytyi {len(tulokset)} viitettä:")
+                    print("\n\n".join(map(str, tulokset)))
 
             else:
                 self.io.write("Tuntematon komento.")
