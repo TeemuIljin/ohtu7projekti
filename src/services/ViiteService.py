@@ -233,3 +233,40 @@ class ViiteService:
                 v.tagit.get("title", "").lower()
             )
         )
+
+    def suodata(self, tyyppi=None, vuosi=None, kirjoittaja=None):
+        """
+        Suodattaa viitteet annettujen kriteerien perusteella.
+
+        :param tyyppi: Viitteen tyyppi (esim. "book", "article")
+        :param vuosi: Julkaisuvuosi
+        :param kirjoittaja: Kirjoittajan nimi (osittaishaku)
+        :return: Lista suodatetuista viitteistä
+        """
+        viitteet = self._viite_repository.anna()
+        tulokset = []
+
+        for viite in viitteet:
+            # Tarkista tyyppi
+            if tyyppi and viite.tyyppi.lower() != tyyppi.lower():
+                continue
+
+            # Tarkista vuosi
+            if vuosi and viite.tagit.get("year") != vuosi:
+                continue
+
+            # Tarkista kirjoittaja (osittaishaku)
+            if kirjoittaja:
+                viite_kirjoittaja = viite.tagit.get("author", "").lower()
+                if kirjoittaja.lower() not in viite_kirjoittaja:
+                    continue
+
+            tulokset.append(viite)
+
+        return sorted(
+            tulokset,
+            key=lambda v: (
+                v.tyyppi.lower(),
+                v.tagit.get("title", "").lower()
+            )
+        )
