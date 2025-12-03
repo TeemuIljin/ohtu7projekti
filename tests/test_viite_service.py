@@ -108,3 +108,10 @@ def test_poista_viite():
     viitteet = service.anna_viitteet()
 
     assert len(viitteet) == 0
+
+def test_poista_kun_viitettä_ei_ole():
+    service = luo_palvelu()
+
+    result = service.poista_viite("tommone")
+
+    assert result is False
