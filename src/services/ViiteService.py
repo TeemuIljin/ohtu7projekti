@@ -121,6 +121,7 @@ class ViiteService:
             "tyyppi": "type",
             "vuosikerta": "volume",
             "vuosi": "year",
+            "kategoria": "category"
         }
 
     def anna_fi_nimi_ja_bib_nimi(self, tagi):
@@ -168,8 +169,11 @@ class ViiteService:
 
     def muokkaa_tagia(self, muokattava, tagi, arvo):
         viite = self._viite_repository.etsi(muokattava)
-
-        if tagi not in viite.tagit:
+        
+        if viite is None or isinstance(viite, str):
+            return "Viitettä ei löytynyt."
+        
+        if tagi not in viite.tagit or tagi not in self.tagityypit.values():
             for _, tagiparit in self.viitetyypit.items():
                 for fi_nimi, bib_nimi in tagiparit:
                     if fi_nimi == tagi:
@@ -178,11 +182,13 @@ class ViiteService:
                 if tagi in viite.tagit:
                     break
 
-        if viite and tagi in viite.tagit:
+        if viite and tagi in viite.tagit or tagi in self.tagityypit.values():
             viite.tagit[tagi] = arvo
             self._viite_repository.tallenna(viite)
             self.kirjoita_bibtex()
             return viite
+        
+        return "Virheellinen tagi"
 
     def hae_viitteet_tiedostosta(self, polku=None):
         lahde = Path(polku) if polku else self.OLETUS_DATA
@@ -233,7 +239,7 @@ class ViiteService:
                 v.tagit.get("title", "").lower()
             )
         )
-
+        
     def suodata(self, tyyppi=None, vuosi=None, kirjoittaja=None):
         """
         Suodattaa viitteet annettujen kriteerien perusteella.
@@ -268,5 +274,15 @@ class ViiteService:
             key=lambda v: (
                 v.tyyppi.lower(),
                 v.tagit.get("title", "").lower()
+            )
+        )
+        
+    def hae_kategoriaa(self, kategoria):
+        viitteet = self._viite_repository.kategoriahaku(kategoria)
+        return sorted(
+            viitteet,
+            key=lambda v: (
+                v.tyyppi.lower(),
+                v.tagit.get("category", "").lower()
             )
         )

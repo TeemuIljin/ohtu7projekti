@@ -115,3 +115,122 @@ def test_poista_kun_viitettä_ei_ole():
     result = service.poista_viite("tommone")
 
     assert result is False
+    
+def test_hae_nimella_kun_nimia_loytyy():
+    service= luo_palvelu()
+    #luodaan viitteita hakua varten
+    v1 = service.luo_viite(
+        "book",
+        {
+            "author": "kirjoittaja",
+            "title": "Testiteos",
+            "year": "2000",
+            "publisher": "Otava"
+        })
+    v2 = service.luo_viite(
+        "book",
+        {
+            "author": "kirjailija",
+            "title": "teostesti2",
+            "year": "2001",
+            "publisher": "Otava"
+        })
+
+    #suoritetaan haku
+    tulos = service.hae_nimea("testi")
+    #heattujen viitteiden tulisi olla samat kuin alussa luodut viitteet ja aakkosjärjestyksessä
+    assert tulos == sorted([v1, v2], key=lambda v: v.tagit["title"].lower())
+
+def test_hae_nimella_kun_ei_ole_nimia():
+    service= luo_palvelu()
+
+    #suoritetaan haku
+    tulos = service.hae_nimea("testi")
+
+    #ei pitäisis löytyä yhtään viitetta
+    assert tulos == []
+
+def test_hae_nimella_kun_ei_vastaavia_nimia():
+    service= luo_palvelu()
+
+    v1 = service.luo_viite(
+        "book",
+        {
+            "author": "kirjoittaja",
+            "title": "eiloydy",
+            "year": "2000",
+            "publisher": "Otava"
+        })
+
+    #suoritetaan haku
+    tulos = service.hae_nimea("testi")
+
+    #ei pitäisis löytyä yhtään viitetta
+    assert tulos == []
+    
+def test_hae_kategoriaa_kun_kategoria_loytyy():
+    service= luo_palvelu()
+
+    #luodaan viitteita hakua varten
+    v1 = service.luo_viite(
+        "book",
+        {
+            "author": "kirjoittaja",
+            "title": "tämmöne",
+            "year": "2000",
+            "publisher": "Otava",
+            "category": "tärkeä"
+        })
+
+    v2 = service.luo_viite(
+        "book",
+        {
+            "author": "kirjailija",
+            "title": "tommonen",
+            "year": "2001",
+            "publisher": "WSOY",
+            "category": "tärkeä"
+        })
+    
+    v3 = service.luo_viite(
+        "book",
+        {
+            "author": "kirjailija2",
+            "title": "semmonen",
+            "year": "2002",
+            "publisher": "Otava",
+            "category": "huono"
+            
+        })
+
+    tulos = service.hae_kategoriaa("tärkeä")
+
+    assert tulos == sorted([v1, v2], key=lambda v: v.tagit["category"].lower())
+    
+def test_hae_kategoriaa_kun_ei_ole_kategoriaa():
+    service= luo_palvelu()
+
+    tulos = service.hae_kategoriaa("tärkeä")
+
+    assert tulos == []
+    
+def test_muokkaa_viitetta_kun_viite_olemassa():
+    service= luo_palvelu()
+    
+    v1 = service.luo_viite(
+        "book",
+        {
+            "author": "kirjoittaja",
+            "title": "tämmöne",
+            "year": "2000",
+            "publisher": "Otava"
+        })
+    
+    tulos = service.muokkaa_tagia("tämmöne", "year", "2020")
+    assert tulos.tagit["year"] == "2020"
+    
+def test_muokkaa_viitetta_kun_viite_ei_ole_olemassa():
+    service= luo_palvelu()
+    
+    tulos = service.muokkaa_tagia("tämmöne", "year", "2020")
+    assert tulos == "Viitettä ei löytynyt."

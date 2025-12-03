@@ -5,7 +5,7 @@ class App:
 
     def run(self):
         self.io.write(
-            "Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, suodata, lopeta")
+            "Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta, hae kategoriaa")
 
         while True:
             command = self.io.read("> ")
@@ -100,6 +100,17 @@ class App:
                             print(f"{viite}\n")
                 else: 
                     print("hakusanan täytyy olla vähintään yksi kirjain tai merkki")
+                    
+            elif command == "hae kategoriaa":
+                kategoria = self.io.read("Haettava kategoria: ")
+                kategoria = kategoria.strip()
+                if len(kategoria) >= 1:
+                    tulokset = self.viite_service.hae_kategoriaa(kategoria)
+                    if not tulokset:
+                        print("Ei hakua vastaavia viitteita")
+                    else:
+                        for viite in tulokset:
+                            print(f"{viite}\n")
 
             elif command == "suodata":
                 self.io.write("Suodatuskriteerit (jätä tyhjäksi ohittaaksesi):")
@@ -119,7 +130,6 @@ class App:
                 self.io.write("Tuntematon komento.")
 
                 print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
-
     def _listaa_viitteet(self):
         viitteet = self.viite_service.anna_viitteet()
         if not viitteet:
@@ -127,3 +137,4 @@ class App:
             return
         else:
             print("\n\n".join(map(str, viitteet)))
+
