@@ -121,6 +121,7 @@ class ViiteService:
             "tyyppi": "type",
             "vuosikerta": "volume",
             "vuosi": "year",
+            "kategoria": "category"
         }
 
     def anna_fi_nimi_ja_bib_nimi(self, tagi):
@@ -168,21 +169,19 @@ class ViiteService:
 
     def muokkaa_tagia(self, muokattava, tagi, arvo):
         viite = self._viite_repository.etsi(muokattava)
-
-        if tagi not in viite.tagit:
-            for _, tagiparit in self.viitetyypit.items():
-                for fi_nimi, bib_nimi in tagiparit:
-                    if fi_nimi == tagi:
-                        tagi = bib_nimi
-                        break
-                if tagi in viite.tagit:
-                    break
-
-        if viite and tagi in viite.tagit:
-            viite.tagit[tagi] = arvo
+        
+        if viite is None or isinstance(viite, str):
+            return "Viitettä ei löytynyt."
+        
+        bib_tagi = self.tagityypit.get(tagi, tagi)
+        
+        if bib_tagi in viite.tagit:
+            viite.tagit[bib_tagi] = arvo
             self._viite_repository.tallenna(viite)
             self.kirjoita_bibtex()
             return viite
+        
+        return f"Viitteellä ei ole tagia '{tagi}'"
 
     def hae_viitteet_tiedostosta(self, polku=None):
         lahde = Path(polku) if polku else self.OLETUS_DATA
@@ -231,5 +230,52 @@ class ViiteService:
             key=lambda v: (
                 v.tyyppi.lower(),
                 v.tagit.get("title", "").lower()
+            )
+        )
+        
+    def suodata(self, tyyppi=None, vuosi=None, kirjoittaja=None):
+        """
+        Suodattaa viitteet annettujen kriteerien perusteella.
+
+        :param tyyppi: Viitteen tyyppi (esim. "book", "article")
+        :param vuosi: Julkaisuvuosi
+        :param kirjoittaja: Kirjoittajan nimi (osittaishaku)
+        :return: Lista suodatetuista viitteistä
+        """
+        viitteet = self._viite_repository.anna()
+        tulokset = []
+
+        for viite in viitteet:
+            # Tarkista tyyppi
+            if tyyppi and viite.tyyppi.lower() != tyyppi.lower():
+                continue
+
+            # Tarkista vuosi
+            if vuosi and viite.tagit.get("year") != vuosi:
+                continue
+
+            # Tarkista kirjoittaja (osittaishaku)
+            if kirjoittaja:
+                viite_kirjoittaja = viite.tagit.get("author", "").lower()
+                if kirjoittaja.lower() not in viite_kirjoittaja:
+                    continue
+
+            tulokset.append(viite)
+
+        return sorted(
+            tulokset,
+            key=lambda v: (
+                v.tyyppi.lower(),
+                v.tagit.get("title", "").lower()
+            )
+        )
+        
+    def hae_kategoriaa(self, kategoria):
+        viitteet = self._viite_repository.kategoriahaku(kategoria)
+        return sorted(
+            viitteet,
+            key=lambda v: (
+                v.tyyppi.lower(),
+                v.tagit.get("category", "").lower()
             )
         )

@@ -1,0 +1,26 @@
+[MASTER]
+ignore=tests
+
+[MESSAGE CONTROL]
+
+disable=raw-checker-failed,
+        bad-inline-option,
+        locally-disabled,
+        file-ignored,
+        suppressed-message,
+        useless-suppression,
+        deprecated-pragma,
+        use-symbolic-message-instead,
+        missing-module-docstring,
+        missing-function-docstring,
+        missing-class-docstring,
+        line-too-long,
+        trailing-whitespace
+
+[FORMAT]
+max-line-length=100
+
+[REFACTORING]
+max-args=5 
+
+[DESIGN]

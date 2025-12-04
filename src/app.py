@@ -5,7 +5,7 @@ class App:
 
     def run(self):
         self.io.write(
-            "Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta")
+            "Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta, hae kategoriaa, suodata")
 
         while True:
             command = self.io.read("> ")
@@ -58,7 +58,8 @@ class App:
 
                 self.viite_service.muokkaa_tagia(muokattava, tagi, arvo)
 
-                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+                self.io.write(f"Viite '{muokattava}' on muokattu.")
+                self._listaa_viitteet()
 
             elif command == "hae":
                 polku = self.io.read(
@@ -100,12 +101,36 @@ class App:
                             print(f"{viite}\n")
                 else: 
                     print("hakusanan täytyy olla vähintään yksi kirjain tai merkki")
+                    
+            elif command == "hae kategoriaa":
+                kategoria = self.io.read("Haettava kategoria: ")
+                kategoria = kategoria.strip()
+                if len(kategoria) >= 1:
+                    tulokset = self.viite_service.hae_kategoriaa(kategoria)
+                    if not tulokset:
+                        print("Ei hakua vastaavia viitteita")
+                    else:
+                        for viite in tulokset:
+                            print(f"{viite}\n")
+
+            elif command == "suodata":
+                self.io.write("Suodatuskriteerit (jätä tyhjäksi ohittaaksesi):")
+                tyyppi = self.io.read("Viitteen tyyppi: ").strip() or None
+                vuosi = self.io.read("Vuosi: ").strip() or None
+                kirjoittaja = self.io.read("Kirjoittaja: ").strip() or None
+
+                tulokset = self.viite_service.suodata(tyyppi, vuosi, kirjoittaja)
+
+                if not tulokset:
+                    self.io.write("Ei suodatusta vastaavia viitteitä.")
+                else:
+                    self.io.write(f"Löytyi {len(tulokset)} viitettä:")
+                    print("\n\n".join(map(str, tulokset)))
 
             else:
                 self.io.write("Tuntematon komento.")
 
                 print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
-
     def _listaa_viitteet(self):
         viitteet = self.viite_service.anna_viitteet()
         if not viitteet:
@@ -113,3 +138,4 @@ class App:
             return
         else:
             print("\n\n".join(map(str, viitteet)))
+
