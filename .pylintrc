@@ -1,5 +1,7 @@
 [MASTER]
 ignore=tests
+init-hook='import sys; sys.path.append("src")'
+
 
 [MESSAGE CONTROL]
 
@@ -21,6 +23,8 @@ disable=raw-checker-failed,
 max-line-length=100
 
 [REFACTORING]
-max-args=5 
+max-args=8
+max-locals=15
 
 [DESIGN]
+max-statements=15
