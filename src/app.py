@@ -135,7 +135,5 @@ class App:
         viitteet = self.viite_service.anna_viitteet()
         if not viitteet:
             self.io.write("Ei yhtään viitettä.")
-            return
         else:
             print("\n\n".join(map(str, viitteet)))
-
