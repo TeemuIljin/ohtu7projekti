@@ -90,7 +90,7 @@ class App:
 
             elif command == "hae nimella":
                 hakusana = self.io.read(
-                    "Haettavan viitteen nimi tai osa nimestä: ")
+                    "Haettavan viitteen nimi tai osa nimesta: ")
                 hakusana = hakusana.strip()
                 if len(hakusana) >= 1:
                     tulokset = self.viite_service.hae_nimea(hakusana)
