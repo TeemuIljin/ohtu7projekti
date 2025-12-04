@@ -96,3 +96,66 @@ Nyt viite on luotu. Esimerkin tapauksessa ohjelma loi BibTeX-formaatin mukaisen 
   pages = {10-30}
 }
 ```
+
+### Viitteiden suodattaminen
+
+Viitteiden suodattaminen tapahtuu komennolla `suodata`.
+
+Ohjelma kysyy suodatuskriteerejä: viitteen tyyppi, vuosi ja kirjoittaja. Voit jättää minkä tahansa kriteerin tyhjäksi ohittaaksesi sen. Kirjoittajahaku toimii osittaishaulla.
+
+#### Käyttöesimerkki
+
+```
+> suodata
+Suodatuskriteerit (jätä tyhjäksi ohittaaksesi):
+Viitteen tyyppi: book
+Vuosi: 
+Kirjoittaja: Oksanen
+Löytyi 1 viitettä:
+@book{SofiOksanen2008,
+  author = {Sofi Oksanen},
+  title = {Puhdistus},
+  publisher = {WSOY},
+  year = {2008}
+}
+```
+
+Voit myös suodattaa pelkästään yhdellä kriteerillä:
+
+```
+> suodata
+Suodatuskriteerit (jätä tyhjäksi ohittaaksesi):
+Viitteen tyyppi: 
+Vuosi: 2008
+Kirjoittaja: 
+Löytyi 1 viitettä:
+...
+```
+
+## Testaus
+
+### Yksikkötestit (pytest)
+
+Yksikkötestit ajetaan komennolla:
+
+```bash
+poetry run pytest
+```
+
+### Hyväksymistestit (Robot Framework)
+
+Projekti sisältää Robot Framework -hyväksymistestit seuraaville user storyille:
+
+| User Story | Testitiedosto |
+|------------|---------------|
+| Käyttäjä voi listata viitteet | `robot_tests/listaa_viitteet.robot` |
+| Käyttäjä voi suodattaa viitteitä | `robot_tests/suodata_viitteet.robot` |
+| Käyttäjä voi poistaa viitteitä | `robot_tests/poista_viite.robot` |
+
+Robot Framework -testit ajetaan komennolla:
+
+```bash
+poetry run robot robot_tests
+```
+
+Testien suorituksen jälkeen yksityiskohtainen HTML-raportti löytyy tiedostosta `report.html`.
