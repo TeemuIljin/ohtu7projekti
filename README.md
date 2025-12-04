@@ -20,7 +20,9 @@ Uuden viitteen luominen tapahtuu komennolla `uusi`.
 
 Ohjelma kysyy viitteen tyyppiä ja siihen liittyviä pakollisten tagien arvoja. Tämän jälkeen on mahdollista antaa valinnaisia tageja, jotka ohjelma kysyy yksi kerrallaan. Kun olet valmis, jätä kysymys "Valinnainen tagi" tyhjäksi.
 
-Sekä viitetyypin että tagin voi antaa suomeksi tai englanniksi. Ohjelma ymmärtää molemmat
+Sekä viitetyypin että tagin voi antaa suomeksi tai englanniksi. Ohjelma ymmärtää molemmat.
+
+**Kategorian lisääminen:** Voit lisätä viitteelle kategorian antamalla valinnaisen tagin `kategoria` (tai `category`) ja sille haluamasi arvon.
 
 #### Viitetyyppivaihtoehdot:
 
@@ -67,6 +69,7 @@ Sekä viitetyypin että tagin voi antaa suomeksi tai englanniksi. Ohjelma ymmär
 | `tyyppi`        | `type`         |
 | `vuosikerta`    | `volume`       |
 | `vuosi`         | `year`         |
+| `kategoria`     | `category`     |
 
 #### Käyttöesimerkki
 
