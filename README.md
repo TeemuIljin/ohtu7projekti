@@ -99,3 +99,85 @@ Nyt viite on luotu. Esimerkin tapauksessa ohjelma loi BibTeX-formaatin mukaisen 
   pages = {10-30}
 }
 ```
+### Viitteen muokkaaminen
+
+Viitteen muokkaus tapahtuu komennolla `muokkaa`
+
+Ohjelma kysyy käyttäjältä muokattavan viitteen nimeä, jonka jälkeen ohjelma kysyy mitä 
+tägiä viitteestä muokataan. Tämän jälkeen käyttäjä syöttää uuden arvon muokattavalle tägille.
+
+#### Käyttöesimerkki
+
+Olemassa oleva viite:
+
+```
+@book{SofiOksanen2008,
+  author = {Sofi Oksanen},
+  title = {Puhdistus},
+  publisher = {WSOY},
+  year = {2008},
+  edition = {3},
+  pages = {10-30}
+}  
+```
+Muokkaa komento:
+   
+```
+>muokkaa
+Muokattavan viitteen nimi: Puhdistus
+Mitä viitteestä muokataan: sivut
+Uusi arvo: 15-30
+```
+Nyt viitettä on muokattu ja ohjelma ilmoittaa viestillä: "Viite Puhdistus on muokattu."
+Ohjelma myös tulostaa tämän perään viitteet:
+
+```
+@book{SofiOksanen2008,
+  author = {Sofi Oksanen},
+  title = {Puhdistus},
+  publisher = {WSOY}, 
+  year = {2008},
+  edition = {3},
+  pages = {15-30}
+}
+```
+
+### Kategoria haku
+
+Kategorioita voi lisätä viitteeseen aina yhden. Kategoria voi olla mitä tahansa.
+Kategorian lisääminen tapahtuu `uusi` komennon kautta lisäämällä valinnainen tägi.
+
+Viitteitä voi hakea kategorioittan komennolla `hae kategoriaa`. 
+Komento kysyy käyttäjältä haettavan kategorian nimeä.
+
+#### Käyttöesimerkki
+
+Olemassa oleva viite: 
+
+```
+@book{SofiOksanen2008,
+  author = {Sofi Oksanen},
+  title = {Puhdistus},
+  publisher = {WSOY}, 
+  year = {2008},
+  edition = {3},
+  pages = {15-30},
+  category = {tärkeä}
+}
+```
+
+Hae kategoriaa komento:
+
+```
+>hae kategoriaa
+Haettava kategoria: tärkeä
+@book{SofiOksanen2008,
+  author = {Sofi Oksanen},
+  title = {Puhdistus},
+  publisher = {WSOY},
+  year = {2008},
+  edition = {3},
+  pages = {15-30},
+  category = {tärkeä}
+}  
+```
