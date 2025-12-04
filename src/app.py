@@ -5,7 +5,7 @@ class App:
 
     def run(self):
         self.io.write(
-            "Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta, hae kategoriaa")
+            "Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta, hae kategoriaa, suodata")
 
         while True:
             command = self.io.read("> ")
