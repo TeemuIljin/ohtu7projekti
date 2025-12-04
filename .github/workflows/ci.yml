@@ -32,7 +32,7 @@ jobs:
 
       - name: Run Pylint
         run: |
-          pylint --rcfile=.pylintrc src/
+          python -m pylint --rcfile=.pylintrc src/
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
