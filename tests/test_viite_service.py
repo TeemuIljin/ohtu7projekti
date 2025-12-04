@@ -269,3 +269,244 @@ def test_anna_viitteet():
     assert tulos == sorted([v1, v2, v3],
         key=lambda v: (v.tyyppi.lower(), v.tagit.get("title", "").lower())
     )
+
+
+# Suodata-testit
+
+def test_suodata_tyypilla():
+    service = luo_palvelu()
+    
+    service.luo_viite("book", {
+        "author": "Kirjailija",
+        "title": "Kirja1",
+        "year": "2000",
+        "publisher": "WSOY"
+    })
+    service.luo_viite("article", {
+        "author": "Tutkija",
+        "title": "Artikkeli1",
+        "year": "2001",
+        "journal": "Lehti"
+    })
+    
+    tulokset = service.suodata(tyyppi="book")
+    
+    assert len(tulokset) == 1
+    assert tulokset[0].tagit["title"] == "Kirja1"
+
+
+def test_suodata_vuodella():
+    service = luo_palvelu()
+    
+    service.luo_viite("book", {
+        "author": "Kirjailija1",
+        "title": "Kirja2000",
+        "year": "2000",
+        "publisher": "WSOY"
+    })
+    service.luo_viite("book", {
+        "author": "Kirjailija2",
+        "title": "Kirja2010",
+        "year": "2010",
+        "publisher": "Otava"
+    })
+    
+    tulokset = service.suodata(vuosi="2000")
+    
+    assert len(tulokset) == 1
+    assert tulokset[0].tagit["title"] == "Kirja2000"
+
+
+def test_suodata_kirjoittajalla():
+    service = luo_palvelu()
+    
+    service.luo_viite("book", {
+        "author": "Mika Waltari",
+        "title": "Sinuhe",
+        "year": "1945",
+        "publisher": "WSOY"
+    })
+    service.luo_viite("book", {
+        "author": "Väinö Linna",
+        "title": "Tuntematon",
+        "year": "1954",
+        "publisher": "WSOY"
+    })
+    
+    tulokset = service.suodata(kirjoittaja="Waltari")
+    
+    assert len(tulokset) == 1
+    assert tulokset[0].tagit["title"] == "Sinuhe"
+
+
+def test_suodata_usealla_kriteerilla():
+    service = luo_palvelu()
+    
+    service.luo_viite("book", {
+        "author": "Mika Waltari",
+        "title": "Sinuhe",
+        "year": "1945",
+        "publisher": "WSOY"
+    })
+    service.luo_viite("book", {
+        "author": "Mika Waltari",
+        "title": "Turms",
+        "year": "1955",
+        "publisher": "WSOY"
+    })
+    service.luo_viite("article", {
+        "author": "Mika Waltari",
+        "title": "Artikkeli",
+        "year": "1945",
+        "journal": "Lehti"
+    })
+    
+    tulokset = service.suodata(tyyppi="book", vuosi="1945", kirjoittaja="Waltari")
+    
+    assert len(tulokset) == 1
+    assert tulokset[0].tagit["title"] == "Sinuhe"
+
+
+def test_suodata_ei_tuloksia():
+    service = luo_palvelu()
+    
+    service.luo_viite("book", {
+        "author": "Kirjailija",
+        "title": "Kirja",
+        "year": "2000",
+        "publisher": "WSOY"
+    })
+    
+    tulokset = service.suodata(vuosi="1999")
+    
+    assert len(tulokset) == 0
+
+
+def test_suodata_ilman_kriteereja_palauttaa_kaikki():
+    service = luo_palvelu()
+    
+    service.luo_viite("book", {
+        "author": "Kirjailija1",
+        "title": "Kirja1",
+        "year": "2000",
+        "publisher": "WSOY"
+    })
+    service.luo_viite("book", {
+        "author": "Kirjailija2",
+        "title": "Kirja2",
+        "year": "2001",
+        "publisher": "Otava"
+    })
+    
+    tulokset = service.suodata()
+    
+    assert len(tulokset) == 2
+
+
+# Viitteiden järjestäminen (sort) -testit
+
+def test_anna_viitteet_jarjestaa_tyypin_mukaan():
+    service = luo_palvelu()
+    
+    # Luodaan eri tyyppiset viitteet epäjärjestyksessä
+    service.luo_viite("book", {
+        "author": "Kirjailija",
+        "title": "Zeta kirja",
+        "year": "2000",
+        "publisher": "WSOY"
+    })
+    service.luo_viite("article", {
+        "author": "Tutkija",
+        "title": "Alpha artikkeli",
+        "year": "2001",
+        "journal": "Lehti"
+    })
+    
+    viitteet = service.anna_viitteet()
+    
+    # Article tulee ennen book (aakkosjärjestys)
+    assert viitteet[0].tyyppi == "article"
+    assert viitteet[1].tyyppi == "book"
+
+
+def test_anna_viitteet_jarjestaa_nimen_mukaan_samassa_tyypissa():
+    service = luo_palvelu()
+    
+    # Luodaan saman tyypin viitteet epäjärjestyksessä
+    service.luo_viite("book", {
+        "author": "Kirjailija1",
+        "title": "Zeta",
+        "year": "2000",
+        "publisher": "WSOY"
+    })
+    service.luo_viite("book", {
+        "author": "Kirjailija2",
+        "title": "Alpha",
+        "year": "2001",
+        "publisher": "Otava"
+    })
+    service.luo_viite("book", {
+        "author": "Kirjailija3",
+        "title": "Beta",
+        "year": "2002",
+        "publisher": "WSOY"
+    })
+    
+    viitteet = service.anna_viitteet()
+    
+    # Aakkosjärjestys nimen mukaan
+    assert viitteet[0].tagit["title"] == "Alpha"
+    assert viitteet[1].tagit["title"] == "Beta"
+    assert viitteet[2].tagit["title"] == "Zeta"
+
+
+def test_anna_viitteet_jarjestaa_isoilla_ja_pienilla_kirjaimilla():
+    service = luo_palvelu()
+    
+    service.luo_viite("book", {
+        "author": "Kirjailija1",
+        "title": "alpha",
+        "year": "2000",
+        "publisher": "WSOY"
+    })
+    service.luo_viite("book", {
+        "author": "Kirjailija2",
+        "title": "BETA",
+        "year": "2001",
+        "publisher": "Otava"
+    })
+    
+    viitteet = service.anna_viitteet()
+    
+    # Järjestys on case-insensitive
+    assert viitteet[0].tagit["title"] == "alpha"
+    assert viitteet[1].tagit["title"] == "BETA"
+
+
+# anna_fi_nimi_ja_bib_nimi -testit
+
+def test_anna_fi_nimi_ja_bib_nimi_suomeksi():
+    service = luo_palvelu()
+    
+    (fi_nimi, bib_nimi) = service.anna_fi_nimi_ja_bib_nimi("kirjoittaja")
+    
+    assert fi_nimi == "kirjoittaja"
+    assert bib_nimi == "author"
+
+
+def test_anna_fi_nimi_ja_bib_nimi_englanniksi():
+    service = luo_palvelu()
+    
+    (fi_nimi, bib_nimi) = service.anna_fi_nimi_ja_bib_nimi("author")
+    
+    assert fi_nimi == "kirjoittaja"
+    assert bib_nimi == "author"
+
+
+def test_anna_fi_nimi_ja_bib_nimi_tuntematon():
+    service = luo_palvelu()
+    
+    (fi_nimi, bib_nimi) = service.anna_fi_nimi_ja_bib_nimi("tuntematon_tagi")
+    
+    assert fi_nimi is None
+    assert bib_nimi is None
