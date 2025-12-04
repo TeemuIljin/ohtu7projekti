@@ -212,13 +212,13 @@ Haettava kategoria: tärkeä
 }  
 ```
 
-### Viitten haku nimellä 
+### Viitteen haku nimellä 
 
-Voit hakea viitteitä nimellä antamalla konennon `hea nimella`. Komento kysyy käyttäjältä haettavan viitteen nimeä. Viitteen Koko nimeä ei tarvitse muistaa, vaan riittää vain osa nimestä.
+Voit hakea viitteitä nimellä antamalla komennon `hea nimella`. Komento kysyy käyttäjältä haettavan viitteen nimeä. Viitteen Koko nimeä ei tarvitse muistaa, vaan riittää vain osa nimestä.
 
-Haun jälkeen käyttäjälle listataan kaikki viitteet joiden nimessä annettu hakusana on. Jos halua vastaavia viitteitä ei ole, ohjelma kertoo, ettei vastaavia viitteitä löytynyt. 
+Haun jälkeen käyttäjälle listataan kaikki viitteet joiden nimessä annettu hakusana on. Jos hakua vastaavia viitteitä ei ole, ohjelma kertoo, ettei vastaavia viitteitä löytynyt. 
 
-Halusanan täytyy olla vähintään yksi kirjain tei merkki. JOs näin ei ole, ohjelma ilmoittaa käyttäjälle "hakusanan täytyy olla vähintään yksi kirjain tai merkki".
+Hakusanan täytyy olla vähintään yksi kirjain tei merkki. Jos näin ei ole, ohjelma ilmoittaa käyttäjälle "hakusanan täytyy olla vähintään yksi kirjain tai merkki".
 
 #### Käyttöesimerkki
 
@@ -241,6 +241,59 @@ Hae viitettä nimellä komento:
 ```
 >hae nimella
 Hettavan viitteen nimi tai osa nimesta: puh
+book{SofiOksanen2008,
+  author = {Sofi Oksanen},
+  title = {Puhdistus},
+  publisher = {WSOY}, 
+  year = {2008},
+  edition = {3},
+  pages = {15-30},
+  category = {tärkeä}
+}
+```
+
+### Viitteiden listaus 
+
+Lisättyjä viitteitä voi tarkistella komennolla `listaa`. Se listaa kaikki olemassa olevat viitteet aakkosjärjestyksessä. Jos viitteitä ei ole, ohjelma ilmoittaa "Ei yhtään viitettä.".
+
+#### Käyttöesimerkki
+
+Olemassa olevat viitteet: 
+
+```
+@book{SofiOksanen2008,
+  author = {Sofi Oksanen},
+  title = {Puhdistus},
+  publisher = {WSOY}, 
+  year = {2008},
+  edition = {3},
+  pages = {15-30},
+  category = {tärkeä}
+}
+
+@book{StephanieGarber2017,
+  author = {Stephanie Garber},
+  title = {Caraval},
+  publisher = {WSOY}, 
+  year = {2017},
+  pages = {10-13},
+  category = {tärkeä}
+}
+```
+
+Listaa komento:
+
+```
+>listaa
+@book{StephanieGarber2017,
+  author = {Stephanie Garber},
+  title = {Caraval},
+  publisher = {WSOY}, 
+  year = {2017},
+  pages = {10-13},
+  category = {tärkeä}
+}
+
 book{SofiOksanen2008,
   author = {Sofi Oksanen},
   title = {Puhdistus},
