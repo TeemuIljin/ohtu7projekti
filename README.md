@@ -142,6 +142,36 @@ Ohjelma myös tulostaa tämän perään viitteet:
 }
 ```
 
+## Viitteen poistaminen
+
+Viitteen poistaminen tapahtuu komennolla `poista` 
+Ohjelma kysyy käyttäjältä poistettavan viitteen nimeä. Jos viitettä ei löydy, ohjelma kertoo, ettei 
+kyseistä viitettä ole olemassa.
+
+### Käyttöesimerkki
+
+Olemassa oleva viite:
+
+```
+@book{SofiOksanen2008,
+  author = {Sofi Oksanen},
+  title = {Puhdistus},
+  publisher = {WSOY},
+  year = {2008},
+  edition = {3},
+  pages = {10-30}
+}  
+```
+
+Poista komento:
+
+```
+>poista
+Poistettavan viitteen nimi: Puhdistus
+
+```
+Nyt viite on poistettu ja ohjelma ilmoittaa viestillä: "Viite 'Puhdistus' on poistettu."
+
 ### Kategoria haku
 
 Kategorioita voi lisätä viitteeseen aina yhden. Kategoria voi olla mitä tahansa.
