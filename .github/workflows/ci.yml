@@ -30,6 +30,10 @@ jobs:
         run: |
           pytest --cov=src --cov-branch --cov-report=xml
 
+      - name: Run Pylint
+        run: |
+          pylint --rcfile=.pylintrc src/
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
