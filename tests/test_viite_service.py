@@ -234,3 +234,38 @@ def test_muokkaa_viitetta_kun_viite_ei_ole_olemassa():
     
     tulos = service.muokkaa_tagia("tämmöne", "year", "2020")
     assert tulos == "Viitettä ei löytynyt."
+
+def test_anna_viitteet():
+    service= luo_palvelu()
+
+    v1 = service.luo_viite(
+        "book",
+        {
+            "author": "kirjoittaja",
+            "title": "teos",
+            "year": "2000",
+            "publisher": "Otava"
+        })
+
+    v2 = service.luo_viite(
+        "book",
+        {
+            "author": "kirjailija",
+            "title": "teos2",
+            "year": "2001",
+            "publisher": "WSOY"
+        })
+
+    v3 = service.luo_viite(
+        "article",
+        {
+            "author": "joku",
+            "title": "testiartikkeli",
+            "year": "2002",
+            "publisher": "julkaisija"
+        })
+
+    tulos = service.anna_viitteet()
+    assert tulos == sorted([v1, v2, v3],
+        key=lambda v: (v.tyyppi.lower(), v.tagit.get("title", "").lower())
+    )
