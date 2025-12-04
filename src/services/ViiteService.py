@@ -173,22 +173,15 @@ class ViiteService:
         if viite is None or isinstance(viite, str):
             return "Viitettä ei löytynyt."
         
-        if tagi not in viite.tagit or tagi not in self.tagityypit.values():
-            for _, tagiparit in self.viitetyypit.items():
-                for fi_nimi, bib_nimi in tagiparit:
-                    if fi_nimi == tagi:
-                        tagi = bib_nimi
-                        break
-                if tagi in viite.tagit:
-                    break
-
-        if viite and tagi in viite.tagit or tagi in self.tagityypit.values():
-            viite.tagit[tagi] = arvo
+        bib_tagi = self.tagityypit.get(tagi, tagi)
+        
+        if bib_tagi in viite.tagit:
+            viite.tagit[bib_tagi] = arvo
             self._viite_repository.tallenna(viite)
             self.kirjoita_bibtex()
             return viite
         
-        return "Virheellinen tagi"
+        return f"Viitteellä ei ole tagia '{tagi}'"
 
     def hae_viitteet_tiedostosta(self, polku=None):
         lahde = Path(polku) if polku else self.OLETUS_DATA

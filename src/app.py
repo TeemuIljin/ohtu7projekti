@@ -58,7 +58,8 @@ class App:
 
                 self.viite_service.muokkaa_tagia(muokattava, tagi, arvo)
 
-                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+                self.io.write(f"Viite '{muokattava}' on muokattu.")
+                self._listaa_viitteet()
 
             elif command == "hae":
                 polku = self.io.read(
