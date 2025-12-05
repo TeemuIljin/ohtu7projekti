@@ -5,7 +5,7 @@ class App:
 
     def run(self):
         self.io.write(
-            "Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta, hae kategoriaa, suodata")
+            "Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta, hae kategoriaa, suodata, apua")
 
         while True:
             command = self.io.read("> ")
@@ -126,6 +126,11 @@ class App:
                 else:
                     self.io.write(f"Löytyi {len(tulokset)} viitettä:")
                     print("\n\n".join(map(str, tulokset)))
+
+            elif command == "apua"
+                self.io.write(
+                    "Käytettavissa olevat komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta, hae kategoriaa, suodata, apua")
+                self.oi.write("Lisätietoja komennoista voit katsoa käyttöohjeesta")
 
             else:
                 self.io.write("Tuntematon komento.")
