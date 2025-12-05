@@ -13,7 +13,7 @@ Continue
 - Tehtävien jakaminen yhdessä
 
 More of
-- Päivitetään packlogia useammin
+- Päivitetään backlogia useammin
 - Parempi/lisää kommunikaatiota
 - Kuunnellaan toisiamme enemmän
 
