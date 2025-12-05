@@ -37,9 +37,10 @@ jobs:
           files: ./coverage.xml
           fail_ci_if_error: false
           verbose: true
-
+          
       - name: Install pylint
         run: pip install pylint
 
-      - name: pytest testas
-        run: poetry run pylint src
+      - name: Run pylint
+        run: pylint --rcfile=.pylintrc src
+
