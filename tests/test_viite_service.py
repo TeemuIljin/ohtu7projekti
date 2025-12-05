@@ -2,8 +2,8 @@ import json
 from pathlib import Path
 import tempfile
 
-from src.repositories.ViiteRepository import ViiteRepository
-from src.services.ViiteService import ViiteService
+from repositories.ViiteRepository import ViiteRepository
+from services.ViiteService import ViiteService
 
 
 def luo_palvelu():

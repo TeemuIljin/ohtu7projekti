@@ -1,7 +1,7 @@
 from pathlib import Path
 import json
 
-from src.entities.Viite import Viite
+from entities.Viite import Viite
 
 
 class ViiteService:
