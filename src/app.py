@@ -127,7 +127,7 @@ class App:
                     self.io.write(f"Löytyi {len(tulokset)} viitettä:")
                     print("\n\n".join(map(str, tulokset)))
 
-            elif command == "apua"
+            elif command == "apua":
                 self.io.write(
                     "Käytettavissa olevat komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta, hae kategoriaa, suodata, apua")
                 self.oi.write("Lisätietoja komennoista voit katsoa käyttöohjeesta")
