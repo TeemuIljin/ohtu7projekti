@@ -1,6 +1,6 @@
 import random
 import string
-from entities.Viite import Viite
+from src.entities.Viite import Viite
 
 
 class ViiteRepository:

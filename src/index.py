@@ -1,7 +1,7 @@
-from repositories.ViiteRepository import ViiteRepository
-from services.ViiteService import ViiteService
-from ConsoleIO import ConsoleIO
-from app import App
+from src.repositories.ViiteRepository import ViiteRepository
+from src.services.ViiteService import ViiteService
+from src.ConsoleIO import ConsoleIO
+from src.app import App
 
 
 def main():
