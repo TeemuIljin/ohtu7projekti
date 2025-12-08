@@ -1,6 +1,6 @@
-from app import App
-from repositories.ViiteRepository import ViiteRepository
-from services.ViiteService import ViiteService
+from src.app import App
+from src.repositories.ViiteRepository import ViiteRepository
+from src.services.ViiteService import ViiteService
 
 
 class StubIO:
@@ -165,6 +165,7 @@ def test_muokkaa_viite_onnistuu():
     app, io, service = luo_app([
         "muokkaa",
         "Testikirja",     # viitteen nimi
+        "ei",
         "year",           # muokattava tagi
         "2025",           # uusi arvo
         "lopeta"
