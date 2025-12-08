@@ -53,10 +53,30 @@ class App:
 
             elif command == "muokkaa":
                 muokattava = self.io.read("Muokattavan viitteen nimi: ")
-                tagi = self.io.read("Mitä viitteestä muokataan: ")
-                arvo = self.io.read("Uusi arvo: ")
 
-                self.viite_service.muokkaa_tagia(muokattava, tagi, arvo)
+                uusi_tagi_vastaus = self.io.read("Luodaanko uusi tägi? (kyllä/ei): ")
+
+                if uusi_tagi_vastaus == "kyllä":
+                    uus_tagi = self.io.read("Valinnainen tagi: ")
+
+                    if uus_tagi == "":
+                        break
+
+                    (fi_nimi, bib_nimi) = self.viite_service.anna_fi_nimi_ja_bib_nimi(
+                        uus_tagi)
+
+                    if not bib_nimi:
+                            bib_nimi = uus_tagi
+                    arvo = self.io.read(f"{uus_tagi}: ")
+                    self.viite_service.muokkaa_tagia(muokattava, bib_nimi, arvo)
+
+                else:
+                    tagi = self.io.read("Mitä viitteestä muokataan: ")
+                    arvo = self.io.read("Uusi arvo: ")
+                    fi_nimi, bib_tagi = self.viite_service.anna_fi_nimi_ja_bib_nimi(tagi)
+                    if not bib_tagi:
+                            bib_tagi = tagi
+                    self.viite_service.muokkaa_tagia(muokattava, bib_tagi, arvo)
 
                 self.io.write(f"Viite '{muokattava}' on muokattu.")
                 self._listaa_viitteet()
@@ -140,7 +160,5 @@ class App:
         viitteet = self.viite_service.anna_viitteet()
         if not viitteet:
             self.io.write("Ei yhtään viitettä.")
-            return
         else:
             print("\n\n".join(map(str, viitteet)))
-
