@@ -8,7 +8,7 @@ class App:
             "Komennot: uusi, hae, poista, muokkaa, listaa, bibtex, hae nimella, lopeta, hae kategoriaa, suodata, apua")
 
         while True:
-            command = self.io.read("> ")
+            command = self.io.read("> ").strip()
 
             if not command:
                 break
@@ -17,7 +17,7 @@ class App:
                 break
 
             if command == "uusi":
-                tyyppi = self.io.read("Viitteen tyyppi: ")
+                tyyppi = self.io.read("Viitteen tyyppi: ").strip()
 
                 (bib_tyyppi, kysyttavat) = self.viite_service.anna_tagit_ja_bib_tyyppi(
                     tyyppi)
@@ -32,7 +32,7 @@ class App:
                     tagit[bib_nimi] = self.io.read(f"{fi_nimi}: ")
 
                 while True:
-                    uusi_tagi = self.io.read("Valinnainen tagi: ")
+                    uusi_tagi = self.io.read("Valinnainen tagi: ").strip()
 
                     if uusi_tagi == "":
                         break
