@@ -3,6 +3,9 @@ ignore=tests
 init-hook='import sys; sys.path.append("src")'
 
 
+[MAIN]
+fail-under = 9.0
+
 [MESSAGE CONTROL]
 
 disable=raw-checker-failed,
