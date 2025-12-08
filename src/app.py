@@ -48,17 +48,22 @@ class App:
                         arvo = self.io.read(f"{uusi_tagi}: ")
                         tagit[bib_nimi] = arvo
 
-                self.viite_service.luo_viite(bib_tyyppi, tagit)
-                self._listaa_viitteet()
+                try:
+                    self.viite_service.luo_viite(bib_tyyppi, tagit)
+                    self._listaa_viitteet()
+                except Exception as err:
+                    self.io.write(f"Virhe viitteen luomisessa: {err}")
 
             elif command == "muokkaa":
                 muokattava = self.io.read("Muokattavan viitteen nimi: ")
                 tagi = self.io.read("Mitä viitteestä muokataan: ")
                 arvo = self.io.read("Uusi arvo: ")
 
-                self.viite_service.muokkaa_tagia(muokattava, tagi, arvo)
-
-                print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+                try:
+                    self.viite_service.muokkaa_tagia(muokattava, tagi, arvo)
+                    print("\n\n".join(map(str, self.viite_service.anna_viitteet())))
+                except Exception as err:
+                    self.io.write(f"Virhe viitteen muokkaamisessa: {err}")
 
             elif command == "hae":
                 polku = self.io.read(
@@ -71,33 +76,45 @@ class App:
                     self.io.write(f"Virhe: {err}")
 
             elif command == "listaa":
-                self._listaa_viitteet()
+                try:
+                    self._listaa_viitteet()
+                except Exception as err:
+                    self.io.write(f"Virhe viitteiden listauksessa: {err}")
 
             elif command == "bibtex":
                 polku = self.io.read(
                     "BibTeX-tiedoston polku (Enter käyttää oletusta): ").strip()
-                kohde = self.viite_service.kirjoita_bibtex(polku or None)
-                self.io.write(f"Tallennettu tiedostoon {kohde}")
+                try:
+                    kohde = self.viite_service.kirjoita_bibtex(polku or None)
+                    self.io.write(f"Tallennettu tiedostoon {kohde}")
+                except Exception as err:
+                    self.io.write(f"Virhe BibTeX-tiedoston kirjoittamisessa: {err}")
 
             elif command == "poista":
                 title = self.io.read("Poistettavan viitteen nimi: ") ##Kysytään poistettaan viitteen nimi
-                poistettu = self.viite_service.poista_viite(title) 
-                if poistettu:
-                    self.io.write(f"Viite: '{title}' poistettu.")
-                else:
-                    self.io.write(f"Viitettä: '{title}' ei löydetty.")
+                try:
+                    poistettu = self.viite_service.poista_viite(title) 
+                    if poistettu:
+                        self.io.write(f"Viite: '{title}' poistettu.")
+                    else:
+                        self.io.write(f"Viitettä: '{title}' ei löydetty.")
+                except Exception as err:
+                    self.io.write(f"Virhe viitteen poistamisessa: {err}")
 
             elif command == "hae nimella":
                 hakusana = self.io.read(
                     "Haettavan viitteen nimi tai osa nimestä: ")
                 hakusana = hakusana.strip()
                 if len(hakusana) >= 1:
-                    tulokset = self.viite_service.hae_nimea(hakusana)
-                    if not tulokset:
-                        print("Ei hakua vastaavia viitteita")
-                    else:
-                        for viite in tulokset:
-                            print(f"{viite}\n")
+                    try:
+                        tulokset = self.viite_service.hae_nimea(hakusana)
+                        if not tulokset:
+                            print("Ei hakua vastaavia viitteita")
+                        else:
+                            for viite in tulokset:
+                                print(f"{viite}\n")
+                    except Exception as err:
+                        self.io.write(f"Virhe haettaessa viitettä: {err}")
                 else: 
                     print("hakusanan täytyy olla vähintään yksi kirjain tai merkki")
 
@@ -107,13 +124,16 @@ class App:
                 vuosi = self.io.read("Vuosi: ").strip() or None
                 kirjoittaja = self.io.read("Kirjoittaja: ").strip() or None
 
-                tulokset = self.viite_service.suodata(tyyppi, vuosi, kirjoittaja)
+                try:
+                    tulokset = self.viite_service.suodata(tyyppi, vuosi, kirjoittaja)
 
-                if not tulokset:
-                    self.io.write("Ei suodatusta vastaavia viitteitä.")
-                else:
-                    self.io.write(f"Löytyi {len(tulokset)} viitettä:")
-                    print("\n\n".join(map(str, tulokset)))
+                    if not tulokset:
+                        self.io.write("Ei suodatusta vastaavia viitteitä.")
+                    else:
+                        self.io.write(f"Löytyi {len(tulokset)} viitettä:")
+                        print("\n\n".join(map(str, tulokset)))
+                except Exception as err:
+                    self.io.write(f"Virhe suodattaessa viitteitä: {err}")
 
             else:
                 self.io.write("Tuntematon komento.")
