@@ -3,8 +3,9 @@ import string
 
 
 class ViiteRepository:
-    def __init__(self):
+    def __init__(self, id_generaattori=random):
         self._viitteet = []
+        self.id_generaattori = id_generaattori
 
     def luo(self, viite):
         self._viitteet.append(viite)
@@ -49,7 +50,7 @@ class ViiteRepository:
 
     def anna_vapaa_viite_id(self, kirjoittaja, vuosi):
         def _anna_sattumanvarainen_id():
-            return ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+            return ''.join(self.id_generaattori.choices(string.ascii_uppercase + string.digits, k=10))
 
         if kirjoittaja and vuosi:
             for viite in self._viitteet:

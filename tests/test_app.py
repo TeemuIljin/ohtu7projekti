@@ -98,7 +98,7 @@ def test_uusi_viite_tuntematon_tyyppi():
     assert "Tyyppiä tuntematon_tyyppi ei ole olemassa" in io.outputs
 
 
-def test_uusi_viite_valinnaisella_tagilla():
+def test_uusi_viite_valinnaisella_tagilla_bibtex():
     inputs = [
         "uusi",
         "book",
@@ -118,22 +118,45 @@ def test_uusi_viite_valinnaisella_tagilla():
     assert viitteet[0].tagit["pages"] == "10-20"
 
 
-def test_uusi_viite_tuntematon_valinnainen_tagi():
+def test_uusi_viite_valinnaisella_tagilla_suomeksi():
     inputs = [
         "uusi",
-        "book",
+        "kirja",
         "Kirjailija",
         "Testikirja",
         "WSOY",
         "2020",
-        "tuntematon_tagi",
+        "sivut",          # valinnainen tagi
+        "10-20",          # arvo
+        "",               # lopeta valinnaiset
+        "lopeta"
+    ]
+    app, io, service = luo_app(inputs)
+    app.run()
+    
+    viitteet = service.anna_viitteet()
+    assert viitteet[0].tagit["pages"] == "10-20"
+
+
+def test_uusi_viite_oma_valinnainen_tagi():
+    inputs = [
+        "uusi",
+        "kirja",
+        "Kirjailija",
+        "Testikirja",
+        "WSOY",
+        "2020",
+        "kannen väri",
+        "sininen",
         "",
         "lopeta"
     ]
-    app, io, _ = luo_app(inputs)
+    app, _, service = luo_app(inputs)
     app.run()
     
-    assert "Tagia tuntematon_tagi ei ole olemassa" in io.outputs
+    viitteet = service.anna_viitteet()
+    assert len(viitteet) == 1
+    assert viitteet[0].tagit["kannen väri"] == "sininen"
 
 
 # Poista-komento
