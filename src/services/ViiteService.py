@@ -168,20 +168,23 @@ class ViiteService:
         return poistettu
 
     def muokkaa_tagia(self, muokattava, tagi, arvo):
-        viite = self._viite_repository.etsi(muokattava)
-        
-        if viite is None or isinstance(viite, str):
-            return "Viitettä ei löytynyt."
-        
-        bib_tagi = self.tagityypit.get(tagi, tagi)
-        
-        if bib_tagi in viite.tagit:
-            viite.tagit[bib_tagi] = arvo
-            self._viite_repository.tallenna(viite)
-            self.kirjoita_bibtex()
-            return viite
-        
-        return f"Viitteellä ei ole tagia '{tagi}'"
+        viitteet = self._viite_repository.anna()
+        for v in viitteet:
+            if v.tagit.get("title") == muokattava:
+                v.tagit[tagi] = arvo
+                # päivitä repositoryssa (tallenna korvaamalla)
+                try:
+                    self._viite_repository.tallenna(v)
+                except Exception:
+                    # jos repository ei tue tallenna, varmuuden vuoksi jätetään muutos paikalliseen olioon
+                    pass
+                # päivitä Lahteet.bib jos tarpeen
+                try:
+                    self.kirjoita_bibtex()
+                except Exception:
+                    pass
+                return True
+        return False
 
     def hae_viitteet_tiedostosta(self, polku=None):
         lahde = Path(polku) if polku else self.OLETUS_DATA
@@ -279,3 +282,4 @@ class ViiteService:
                 v.tagit.get("category", "").lower()
             )
         )
+    

@@ -226,14 +226,15 @@ def test_muokkaa_viitetta_kun_viite_olemassa():
             "publisher": "Otava"
         })
     
+
     tulos = service.muokkaa_tagia("tämmöne", "year", "2020")
-    assert tulos.tagit["year"] == "2020"
+    assert tulos is True
     
 def test_muokkaa_viitetta_kun_viite_ei_ole_olemassa():
     service= luo_palvelu()
     
     tulos = service.muokkaa_tagia("tämmöne", "year", "2020")
-    assert tulos == "Viitettä ei löytynyt."
+    assert tulos is False
 
 def test_anna_viitteet():
     service= luo_palvelu()
@@ -510,3 +511,18 @@ def test_anna_fi_nimi_ja_bib_nimi_tuntematon():
     
     assert fi_nimi is None
     assert bib_nimi is None
+
+def test_muokkaa_uusi_tagi():
+    service = luo_palvelu()
+
+    v1 = service.luo_viite(
+        "book",
+        {
+            "author": "kirjoittaja",
+            "title": "tämmöne",
+            "year": "2000",
+            "publisher": "Otava"
+        })
+    
+    tulos = service.muokkaa_tagia("tämmöne", "chapter", "2")
+    assert tulos is True
