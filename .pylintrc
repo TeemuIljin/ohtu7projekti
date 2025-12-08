@@ -1,6 +1,9 @@
 [MASTER]
 ignore=tests
 
+[MAIN]
+fail-under = 9.0
+
 [MESSAGE CONTROL]
 
 disable=raw-checker-failed,

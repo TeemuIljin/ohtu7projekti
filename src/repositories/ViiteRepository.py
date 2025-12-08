@@ -1,6 +1,6 @@
 import random
 import string
-from entities.Viite import Viite
+from src.entities.Viite import Viite
 
 
 class ViiteRepository:
@@ -59,3 +59,14 @@ class ViiteRepository:
             return f"{kirjoittaja.replace(' ', '')}{vuosi}"
 
         return _anna_sattumanvarainen_id()
+
+    def kategoriahaku(self, kategoria):
+        kategoria = kategoria.lower()
+        tulokset = []
+
+        for viite in self._viitteet:
+            category = viite.tagit.get('category', '').lower()
+            if kategoria in category:
+                tulokset.append(viite)
+
+        return tulokset
