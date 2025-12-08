@@ -40,13 +40,13 @@ class App:
                     (fi_nimi, bib_nimi) = self.viite_service.anna_fi_nimi_ja_bib_nimi(
                         uusi_tagi)
 
-                    if not bib_nimi:
-                        self.io.write(f"Tagia {uusi_tagi} ei ole olemassa")
-                        continue
-
                     if uusi_tagi:
                         arvo = self.io.read(f"{uusi_tagi}: ")
-                        tagit[bib_nimi] = arvo
+
+                        if bib_nimi:
+                            tagit[bib_nimi] = arvo
+                        else:
+                            tagit[uusi_tagi] = arvo
 
                 self.viite_service.luo_viite(bib_tyyppi, tagit)
                 self._listaa_viitteet()
