@@ -280,8 +280,8 @@ Hae viitettä nimellä komento:
 
 ```
 >hae nimella
-Hettavan viitteen nimi tai osa nimesta: puh
-book{SofiOksanen2008,
+Haettavan viitteen nimi tai osa nimesta: puh
+@book{SofiOksanen2008,
   author = {Sofi Oksanen},
   title = {Puhdistus},
   publisher = {WSOY}, 
@@ -334,7 +334,7 @@ Listaa komento:
   category = {tärkeä}
 }
 
-book{SofiOksanen2008,
+@book{SofiOksanen2008,
   author = {Sofi Oksanen},
   title = {Puhdistus},
   publisher = {WSOY}, 
