@@ -254,7 +254,7 @@ Haettava kategoria: tärkeä
 
 ### Viitteen haku nimellä 
 
-Voit hakea viitteitä nimellä antamalla komennon `hea nimella`. Komento kysyy käyttäjältä haettavan viitteen nimeä. Viitteen Koko nimeä ei tarvitse muistaa, vaan riittää vain osa nimestä.
+Viitteitä voi haeka nimellä antamalla komennon `hea nimella`. Komento kysyy haettavan viitteen nimeä. Viitteen Koko nimeä ei tarvitse muistaa, vaan riittää vain osa nimestä.
 
 Haun jälkeen käyttäjälle listataan kaikki viitteet joiden nimessä annettu hakusana on. Jos hakua vastaavia viitteitä ei ole, ohjelma kertoo, ettei vastaavia viitteitä löytynyt. 
 
@@ -344,6 +344,10 @@ Listaa komento:
   category = {tärkeä}
 }
 ```
+
+### Komentojen tarkastus
+
+Käyettävissä olevat komennot voi tarkistaa komennolla `apua`. Se kertoo komentojen nimet. Kometojen toiminnan ja käyttöesimerkit voit katsoa tästä käyttöohjeesta. 
 
 ## Testaus
 
