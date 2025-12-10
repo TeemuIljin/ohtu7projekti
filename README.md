@@ -130,6 +130,28 @@ Muokkaa komento:
 ```
 >muokkaa
 Muokattavan viitteen nimi: Puhdistus
+Luodaanko uusi viite? (kyllä/ei)
+
+Vaihtoehto kyllä:
+Valinnainen tagi: Kirjan väri
+Kirjan väri: sininen
+
+```
+Nyt viitettä on muokattu ja ohjelma ilmoittaa viestillä: "Viite Puhdistus on muokattu."
+Ohjelma myös tulostaa tämän perään viitteet:
+
+```
+@book{SofiOksanen2008,
+author = {Sofi Oksanen},
+title = {Puhdistus},
+year = {2008},
+publisher = {Like},
+pages = {1-30},
+Kirjan väri = {sininen}
+}
+```
+
+Vaihtoehto ei:
 Mitä viitteestä muokataan: sivut
 Uusi arvo: 15-30
 ```
