@@ -136,6 +136,10 @@ Vaihtoehto kyllä:
 Valinnainen tagi: Kirjan väri
 Kirjan väri: sininen
 
+Vaihtoehto ei:
+Mitä viitteestä muokataan: sivut
+Uusi arvo: 15-30
+
 ```
 Nyt viitettä on muokattu ja ohjelma ilmoittaa viestillä: "Viite Puhdistus on muokattu."
 Ohjelma myös tulostaa tämän perään viitteet:
@@ -149,16 +153,7 @@ publisher = {Like},
 pages = {1-30},
 Kirjan väri = {sininen}
 }
-```
 
-Vaihtoehto ei:
-Mitä viitteestä muokataan: sivut
-Uusi arvo: 15-30
-```
-Nyt viitettä on muokattu ja ohjelma ilmoittaa viestillä: "Viite Puhdistus on muokattu."
-Ohjelma myös tulostaa tämän perään viitteet:
-
-```
 @book{SofiOksanen2008,
   author = {Sofi Oksanen},
   title = {Puhdistus},
@@ -167,6 +162,7 @@ Ohjelma myös tulostaa tämän perään viitteet:
   edition = {3},
   pages = {15-30}
 }
+
 ```
 
 ### Viitteen poistaminen
