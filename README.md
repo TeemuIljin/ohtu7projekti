@@ -6,6 +6,9 @@
 Linkki backlogiin Excel:
 https://jyu-my.sharepoint.com/:x:/g/personal/iljitesa_jyu_fi/IQADiqLZVoVhQqi-13ucvxxHAVHBTSrdfIREZ8CGXW37-0E?e=hIiWEL
 
+Linkki raporttiin:
+https://jyu-my.sharepoint.com/:w:/g/personal/vartivov_jyu_fi/IQCcnmq5SGueT6fJLrB4YfgfAZeg_rU7f6qBDbRFalusqh0?e=mbd1X4
+
 ## Definition of Done
 
 - Koodi on yhdistetty mainiin
